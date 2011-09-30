@@ -632,4 +632,6 @@ window.addEvent('domready', function(e){
     //Get all the entities
     VASIR_ENGINE.functions.get_entities();
 
+    //Setup canvas stuff
+    VASIR_ENGINE.canvas.functions.init();
 });

@@ -260,7 +260,7 @@ div {
         width:42%;
     }
         #canvas {
-            background:#ffffff;
+            background:#ffffff url(../image/grass_bg.png);
             border: 1px solid #cdcdcd;
             height:100%;
             width:100%;
