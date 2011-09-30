@@ -82,6 +82,17 @@ VASIR_ENGINE.canvas.functions.util.draw_rect = function(params, y, w, h){
 //---------------------------------------
 VASIR_ENGINE.canvas.functions.draw_entities = function(){
     //We'll need to loop through all the entities and draw them to the canvas
+    for(i in VASIR_ENGINE.entities){
+        if(i !== undefined){
+            //Add entity to canvas
+            VASIR_ENGINE.canvas.functions.util.draw_rect({
+                x: VASIR_ENGINE.entities[i].position[0] * 10,
+                y: VASIR_ENGINE.entities[i].position[1] * 10,
+                w: 20,
+                h: 10
+            });
+        }
+    }
 }
 //============================================================================
 //
@@ -121,6 +132,7 @@ VASIR_ENGINE.canvas.functions.render = function(){
     VASIR_ENGINE.canvas.functions.clear();
 
     //Draw entities
+    ctx.fillStyle = '#336699';
     VASIR_ENGINE.canvas.functions.draw_entities();
 
 }

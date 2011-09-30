@@ -388,7 +388,7 @@ VASIR_ENGINE.functions.set_entity_target = function(params){
             res = JSON.decode(res);
 
             //Update the entities that this app keeps track of
-            VASIR_ENGINE.entities[source_entity] = target_entity_id;
+            VASIR_ENGINE.entities[source_entity].target = target_entity_id;
 
             //Update the text that shows the target entity info
             $('target_entity_id').set('html', target_entity_id);
