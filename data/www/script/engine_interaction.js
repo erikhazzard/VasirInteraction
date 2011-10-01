@@ -273,6 +273,11 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
                 'style': 'success',
                 'suppress_log': suppress_log});
 
+            //Log it to the console
+            try{
+                console.log(res);
+            }catch(err){}
+
             //Call the callback func if one was passed in
             if(callback !== undefined){
                 callback(res);

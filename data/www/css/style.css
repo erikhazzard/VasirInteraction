@@ -257,13 +257,13 @@ div {
         float:left;
         height:100%;
         margin:0 2% 0 0;
+        position:relative;
         width:42%;
     }
         #canvas {
             background:#ffffff url(../image/grass_bg.png);
             border: 1px solid #cdcdcd;
-            height:100%;
-            width:100%;
+            position:relative;
         }
 
     /* ===================================================================== 
