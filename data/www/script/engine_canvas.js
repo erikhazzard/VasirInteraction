@@ -19,9 +19,9 @@ VASIR_ENGINE.canvas = {
     context: undefined,
 
     config: {
-        entity_cell_position_modifier: 35,
-        entity_width: 30,
-        entity_height: 30
+        entity_cell_position_modifier: 10,
+        entity_width: 20,
+        entity_height: 20
     },
 
     //entities stores canvas entities
@@ -279,7 +279,7 @@ VASIR_ENGINE.canvas.functions.render = function(){
     //Get the context object, store a reference so it's easier to work with
     var ctx = VASIR_ENGINE.canvas.context;
     //Remove everything
-    //VASIR_ENGINE.canvas.functions.clear();
+    VASIR_ENGINE.canvas.functions.clear();
 
     //Draw entities
     ctx.fillStyle = '#232323';
