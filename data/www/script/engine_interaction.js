@@ -32,7 +32,12 @@ var VASIR_ENGINE = {
         //-----------------------------------
         //Misc Actions
         //-----------------------------------
-        'set_selected_entity': undefined
+        'set_selected_entity': undefined,
+
+        //-----------------------------------
+        //Init
+        //-----------------------------------
+        'init': undefined
 
     },
 
@@ -580,55 +585,7 @@ VASIR_ENGINE.functions.set_selected_entity = function(params){
 //PAGE INIT (Attach events to elements)
 //
 //============================================================================
-window.addEvent('domready', function(e){
-    //------------------------------------------------------------------------
-    //
-    //Attach events to elements
-    //
-    //------------------------------------------------------------------------
-    //-----------------------------------
-    //ENGINE Actions
-    //-----------------------------------
-    $('add_entity').addEvent('click', function(e){
-        //Fire off the add_entity action
-        VASIR_ENGINE.functions.add_entity();
-    });
-
-    $('get_entities').addEvent('click', function(e){
-        //Fire off the add_entity action
-        VASIR_ENGINE.functions.get_entities();
-    });
-
-    //-----------------------------------
-    //ENTITY Actions
-    //-----------------------------------
-    $('clear_entity_selection').addEvent('click', function(e){
-        //Set the target to nothing
-        VASIR_ENGINE.functions.set_selected_entity();
-    });   
-
-    $('get_entity_info').addEvent('click', function(e){
-        //Fire off the add_entity action
-        VASIR_ENGINE.functions.get_entity_information();
-    });
-    $('set_entity_target').addEvent('click', function(e){
-        VASIR_ENGINE.functions.toggle_target_selection_mode();
-    });
-    $('converse').addEvent('click', function(e){
-        VASIR_ENGINE.functions.converse();
-    });
-
-    //-----------------------------------
-    //Misc Actions
-    //-----------------------------------
-    //Clear log function
-    $('clear_log').addEvent('click', function(e){
-        e.preventDefault();
-        $('engine_log_ul').empty();
-        $('engine_log').highlight('#ababab');
-
-    });
-
+VASIR_ENGINE.functions.init = function(params){
     //------------------------------------------------------------------------
     //
     //Do initialization stuff
@@ -645,37 +602,6 @@ window.addEvent('domready', function(e){
     //Web Socket stuff
     //
     //------------------------------------------------------------------------
-   // Create SocketIO instance, connect
-/*
-    var socket = new io.Socket('localhost',{
-      port: 8080
-    });
-    socket.connect(); 
-
-    // Add a connect listener
-    socket.on('connect',function() {
-      console.log('Client has connected to the server!');
-    });
-    // Add a connect listener
-    socket.on('message',function(data) {
-      console.log('Received a message from the server!',data);
-    });
-    // Add a disconnect listener
-    socket.on('disconnect',function() {
-      console.log('The client has disconnected!');
-    });
-
-    // Sends a message to the server via sockets
-    function sendMessageToServer(message) {
-      socket.send(message);
-    } 
-*/
-
-    /*
- var socket = io.connect('http://localhost:8080');
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
-    */
-});
+    //Setup all the web socket functions
+    VASIR_ENGINE.WEB_SOCKET.functions.init();
+}
