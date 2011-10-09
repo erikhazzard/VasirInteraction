@@ -147,8 +147,7 @@ VASIR_ENGINE.functions.get_game_state_request = function(){
         },
         onSuccess: function(res, txt){
             VASIR_ENGINE.functions.update_game_state({
-                game_state: res,
-                suppress_log: false
+                game_state: res 
             });
         },
         onFailure: function(res){

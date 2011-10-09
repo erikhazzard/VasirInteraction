@@ -38,8 +38,14 @@ VASIR_ENGINE.WEB_SOCKET.functions.heart_beat = function(){
     VASIR_ENGINE.WEB_SOCKET._socket = io.connect('http://localhost:1337');
     socket = VASIR_ENGINE.WEB_SOCKET._socket;
 
-    socket.on('connect', function (data) {
-        console.log(data, 'zzz');
-        socket.emit('set_name', 'zz');
+    socket.on('connect', function (res) {
+        VASIR_ENGINE.functions.update_log({
+            'message': 'WebSocket connected successfully',
+            'style': 'success'});
+
+        //socket.emit('set_name', 'zz');
+    });
+    socket.on('message', function (res) {
+        VASIR_ENGINE.functions.update_game_state(res);
     });
 }
