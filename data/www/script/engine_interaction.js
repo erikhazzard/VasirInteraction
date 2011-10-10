@@ -10,6 +10,8 @@
 //Main App Object
 //============================================================================
 var VASIR_ENGINE = {
+    '_HOST_NAME': '',
+
     //Store reference to functions
     'functions': {
         //-----------------------------------

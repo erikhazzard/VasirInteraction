@@ -20,7 +20,7 @@ def page_home(request):
     Renders the base page which provides access to interaction functions
     below'''
     return {
-        'HOST': settings.HOST_NAME,
+        'HOST_NAME': settings.HOST_NAME,
     }
 
 '''========================================================================
