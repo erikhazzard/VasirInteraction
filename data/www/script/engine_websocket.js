@@ -35,7 +35,8 @@ VASIR_ENGINE.WEB_SOCKET.functions.init = function(){
 //============================================================================
 VASIR_ENGINE.WEB_SOCKET.functions.game_state_heart_beat = function(){
     //Setup the socket object
-    VASIR_ENGINE.WEB_SOCKET._socket = io.connect('http://localhost:1337');
+    VASIR_ENGINE.WEB_SOCKET._socket = io.connect('http://' + 
+        VASIR_ENGINE._HOST_NAME + ':1337');
     socket = VASIR_ENGINE.WEB_SOCKET._socket;
 
     socket.on('connect', function (res) {
