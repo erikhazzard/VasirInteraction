@@ -252,7 +252,7 @@ div {
         height:100%;
         margin:0 2% 0 0;
         position:relative;
-        width:42%;
+        width:600px;
     }
         #canvas {
             background:#ffffff url(../image/grass_bg.png);
@@ -267,11 +267,12 @@ div {
     #entities_list_wrapper, 
     #engine_action_wrapper {
         float:left;
+        font-size:.9em;
         height:100%;
         margin:0 1% 0 0;
         overflow-x: hidden;
         position:relative;
-        width:18%;
+        width:15%;
     }
     #entity_action_wrapper h2, 
     #entities_list_wrapper h2, 
