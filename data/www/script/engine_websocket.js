@@ -26,14 +26,14 @@ VASIR_ENGINE.WEB_SOCKET = {
 //============================================================================
 VASIR_ENGINE.WEB_SOCKET.functions.init = function(){
     //Call the heartbeat function
-    VASIR_ENGINE.WEB_SOCKET.functions.heart_beat();
+    VASIR_ENGINE.WEB_SOCKET.functions.game_state_heart_beat();
 }
 //============================================================================
 //
 //Heartbeat function
 //
 //============================================================================
-VASIR_ENGINE.WEB_SOCKET.functions.heart_beat = function(){
+VASIR_ENGINE.WEB_SOCKET.functions.game_state_heart_beat = function(){
     //Setup the socket object
     VASIR_ENGINE.WEB_SOCKET._socket = io.connect('http://localhost:1337');
     socket = VASIR_ENGINE.WEB_SOCKET._socket;
@@ -42,8 +42,6 @@ VASIR_ENGINE.WEB_SOCKET.functions.heart_beat = function(){
         VASIR_ENGINE.functions.update_log({
             'message': 'WebSocket connected successfully',
             'style': 'success'});
-
-        //socket.emit('set_name', 'zz');
     });
     socket.on('message', function (res) {
         VASIR_ENGINE.functions.update_game_state(res);
