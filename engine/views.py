@@ -19,7 +19,9 @@ def page_home(request):
     ----------------------
     Renders the base page which provides access to interaction functions
     below'''
-    return {}
+    return {
+        'HOST': settings.HOST_NAME,
+    }
 
 '''========================================================================
     VasirEngine Interactions

@@ -26,6 +26,7 @@ SITE_ENVIRONMENT = settings_config.SITE_ENVIRONMENT
 #Path Of vasir folder
 #------------
 ROOT_PATH = os.path.realpath(os.path.dirname(__file__))
+HOST_NAME = getattr(settings_config, 'HOST_NAME', 'localhost')
 
 #APACHE URL - Used for urls.py prefix.  Usually will be ''
 try:

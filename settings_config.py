@@ -9,6 +9,7 @@
 -----------------------------------------------------------------------------"""
 DEBUG = True
 SITE_ENVIRONMENT = 'dev'
+HOST_NAME = 'localhost'
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
