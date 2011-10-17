@@ -37,8 +37,123 @@
         Content
         ================================= -->
     {% block site_content %}
+        <div id='content_wrapper'>
+            <div id='content'>
+                <!-- ================================ 
+                    Canvas (World representation)
+                    ================================= -->
+                <div id='canvas_wrapper'>
+                    <canvas id='canvas' 
+                    width='600' height='500'></canvas>
+                </div>
+
+                <!-- ================================ 
+                    Select Entity Actions 
+                    ================================= -->
+                <div id='entity_action_wrapper' class='visibility_none'>
+                    <h2>Selected Entity</h2>
+                    <div id='entity_actions'>
+                        <div id='selected_entity_wrapper'>
+                            <div id='selected_entity'>
+                                No Entity Selected
+                            </div>
+                            <div id='selected_entity_target_wrapper'>
+                                Target: <span id='target_entity_id' 
+                                    class='no_target'>None</span>
+                            </div>
+                        </div>
+                        <h2>Actions</h2>
+                        <div id='entity_action_buttons' class='buttons'>
+                            <a id='get_entity_info'
+                                href='#' class='button big'>Get Entity Info</a>
+                            <br /><br />
+                            <a id='set_entity_target'
+                                href='#' class='button big'
+                                title='Click on an entity to the right to set this
+                                entitys target'>Set Target</a>
+                            <br /><br />
+                            <a id='converse'
+                                href='#' class='button big'
+                                title='Run the converse action on the selected entity
+                                and its target'>Converse</a>
+                            <br /><br />
+                            <a id='clear_entity_selection'
+                                href='#' class='button big'>Clear Selection</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================================ 
+                    All Entities List
+                    ================================= -->
+                <div id='entities_list_wrapper' class=''>
+                    <h2 id='entities_list_header'>All Entities</h2>
+                    <div id='entities_list'>
+                        <ul id='entities_list_ul' class='buttons'>
+                            <!-- Entities go here -->
+                        </ul>
+                    </div>
+                </div>
+
+
+                <!-- ================================ 
+                    Engine Actions
+                    ================================= -->
+                <div id='engine_action_wrapper'>
+                    <h2>Engine Actions</h2>
+                    <div id='engine_actions'>
+                        <div id='engine_action_buttons' class='buttons'>
+                            <a id='add_entity' href='#' 
+                                class='button add-big'>Add Entity</a>
+                            <br />
+                            <br />
+                            <a id='get_entities'
+                                href='#' class='button flag-big'>Get All Entities</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class='clear'></div>
+            </div>
+
+            <!-- ================================ 
+                Engine Log
+                ================================= -->
+            <div id='engine_log_wrapper'>
+                <div id='engine_log'>
+                    <ul id='engine_log_ul'>
+                        <!-- Insert log messages here -->
+                        <li>Vasir Engine Interaction - Initialized</li>
+                    </ul>
+                </div>
+                <div id='engine_log_buttons' class='buttons'>
+                    <a id='clear_log'
+                        href='#' class='button big'>Clear Log</a>
+                </div>
+            </div>
+        </div>
     {% endblock %}
 
+    <!-- ================================ 
+        Entity Info
+        ================================= -->
+    <div id='entity_information_wrapper'>
+        <div id='entity_information_header'>
+            <h2> Entity Information </h2>
+            <div id='entity_information_close_wrapper' class='buttons'>
+                <a id='entity_information_close'
+                    href='#' class='button big'>Hide</a>
+            </div>
+        </div>
+        <div id='entity_information'>
+            <!-- Entity Info goes here -->
+            <div id='entity_side_info'></div>
+            <div id='entity_information_network_container'>
+                <!-- Network chart will go here -->
+            </div>
+        </div>
+    </div>
      <!-- ================================
         Footer
         ================================= -->
@@ -60,6 +175,15 @@
 <script src='https://www.google.com/jsapi?key=ABQIAAAAIKnay6FXRbCarRCLzp6OSBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxTSwhUv42NGUmSz4fSrk_Fa2Tgi9g' type='text/javascript'></script>
 <!-- Mootools -->
 <script src='https://ajax.googleapis.com/ajax/libs/mootools/1.3.2/mootools.js' type='text/javascript'></script>
+
+<!-- ======================================================================
+
+    D3
+
+    ======================================================================= -->
+<script src='/static/script/d3.js'></script>
+<script src='/static/script/d3_geom.js'></script>
+<script src='/static/script/d3_layout.js'></script>
 
 <!-- ======================================================================
 

@@ -206,7 +206,7 @@ VASIR_ENGINE.functions.update_game_state = function(params){
     }
         
     //Clear out the existing elements
-    $('entities_list_ul').empty();
+    document.id('entities_list_ul').empty();
 
     //Loop through the returned entities and update the 
     //  VASIR_ENGINE.entities object
@@ -245,28 +245,33 @@ VASIR_ENGINE.functions.update_game_state = function(params){
         })); 
 
         //Add links to the entities list element
-        $('entities_list_ul').adopt(list_element);
+        document.id('entities_list_ul').adopt(list_element);
 
     }
     //Update the entities list header
-    $('entities_list_header').innerHTML = 'All ' 
+    document.id('entities_list_header').innerHTML = 'All ' 
         + res.length + ' Entities';
 }
 //============================================================================
 //ENTITY RELATED
 //============================================================================
 //---------------------------------------
-//get_entity_information( PARAMS({entity_id, callback, suppress_log }) ):
+//get_entity_information( PARAMS({entity_id, callback, suppress_log, show_info_window  }) ):
 //-------------
 //-Sends a request to the server to get the information for a passed in entity.
 //  If no entity is passed in, use the VASIR_ENGINE.selected_entity 
 //  Also takes in an optional callback function, which if specified will get
 //      called on a successful response and will receive the entity info
+//  Can also take in a show_info_window BOOLEAN that determines where to show 
+//      and populate an HTML window. Default is false, but is set to True 
+//      when user clicks 'get info' button
 //---------------------------------------
 VASIR_ENGINE.functions.get_entity_information = function(params){
     //Set the target
     var target = VASIR_ENGINE.selected_entity;
-    var callback = undefined;
+    var callback = undefined,
+        show_info_window = undefined,
+        suppress_log = undefined;
 
     //Check to see if they passed in an object or a string
     if( typeof params === 'object' ){
@@ -274,8 +279,12 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
         if(params.entity_id !== undefined){
             target = params.entity_id;
         }
+
+        //Get params
         callback = params.callback;
-        var suppress_log = params.suppress_log;
+        show_info_window = params.show_info_window;
+        suppress_log = params.suppress_log;
+
     }else if(typeof params === 'string'){
         target = params;
     }
@@ -306,9 +315,9 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
 
             //Update the text that shows the target entity info 
             if( res.target !== undefined) {
-                $('target_entity_id').set('html', res.target);
+                document.id('target_entity_id').set('html', res.target);
             }else{
-                $('target_entity_id').set('html', 'None');
+                document.id('target_entity_id').set('html', 'None');
             }
 
             //Update the engine log
@@ -319,10 +328,24 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
                 'style': 'success',
                 'suppress_log': suppress_log});
 
-            //Log it to the console
+            //DEV: Log it to the console
             try{
                 console.log(res);
             }catch(err){}
+
+            //Show info window if caller asked for it
+            if(show_info_window === true){
+                //Show the window
+                document.id('entity_information_wrapper').setStyle(
+                    'display', 'block');
+
+                //Fill it with data
+                
+                //Setup the D3 network graph 
+                VASIR_ENGINE.D3.functions.setup_network_graph({
+                    entity: VASIR_ENGINE.entities[res.id]
+                });
+            }
 
             //Call the callback func if one was passed in
             if(callback !== undefined){
@@ -372,11 +395,11 @@ VASIR_ENGINE.functions.toggle_target_selection_mode = function(params){
         VASIR_ENGINE.selection_mode = 'entity_target';
         //Add the 'button_active' class to the set_entity_target button to indicate
         //  the selection mode has changed
-        $('set_entity_target').addClass('button_active');
+        document.id('set_entity_target').addClass('button_active');
         
         //Highlight the entity list
-        $('entities_list_header').setStyle('background', 'rgba(240,240,100,.3)')
-        $('entities_list').highlight();
+        document.id('entities_list_header').setStyle('background', 'rgba(240,240,100,.3)')
+        document.id('entities_list').highlight();
     }else if((
         desired_selection_mode === undefined 
         && VASIR_ENGINE.selection_mode === 'entity_target') || (
@@ -386,10 +409,10 @@ VASIR_ENGINE.functions.toggle_target_selection_mode = function(params){
         VASIR_ENGINE.selection_mode = null; 
         //Remove the 'button_active' class to the set_entity_target button to indicate
         //  the selection mode has changed
-        $('set_entity_target').removeClass('button_active');
+        document.id('set_entity_target').removeClass('button_active');
 
         //Unhighlight the entity list
-        $('entities_list_header').setStyle('background', 'none');
+        document.id('entities_list_header').setStyle('background', 'none');
     }
 
 };
@@ -442,7 +465,7 @@ VASIR_ENGINE.functions.set_entity_target = function(params){
             VASIR_ENGINE.entities[source_entity].target = target_entity_id;
 
             //Update the text that shows the target entity info
-            $('target_entity_id').set('html', target_entity_id);
+            document.id('target_entity_id').set('html', target_entity_id);
 
             //Update the engine log
             VASIR_ENGINE.functions.update_log({
@@ -505,7 +528,7 @@ VASIR_ENGINE.functions.converse = function(params){
             res = JSON.decode(res);
 
             if (res.error !== undefined){
-                $('entities_list').highlight();
+                document.id('entities_list').highlight();
                 VASIR_ENGINE.functions.update_log({
                     'message':  'Entity has no target',
                     'style': 'error'});
@@ -564,13 +587,13 @@ VASIR_ENGINE.functions.update_log = function(params){
     //  Add a new list element to the log UL element
     if(suppress_log !== true){
         //Don't update the log if suppress_log is passed in
-        $('engine_log_ul').adopt(new Element('li', {
+        document.id('engine_log_ul').adopt(new Element('li', {
             'class': (style !== undefined) ? style : '',
             'html': (message !== undefined) ? message : ''
         }));
 
         //Scroll to bottom of the log
-        $('engine_log').scrollTop = $('engine_log').scrollHeight;
+        document.id('engine_log').scrollTop = document.id('engine_log').scrollHeight;
     }
 }
 
@@ -606,9 +629,9 @@ VASIR_ENGINE.functions.set_selected_entity = function(params){
             'style': 'success'});
 
         //Update the entity actions box
-        $('selected_entity').innerHTML = target;
-        if(parseInt($('entity_action_wrapper').getStyle('opacity')) < 1){
-            $('entity_action_wrapper').fade(1);
+        document.id('selected_entity').innerHTML = target;
+        if(parseInt(document.id('entity_action_wrapper').getStyle('opacity')) < 1){
+            document.id('entity_action_wrapper').setStyle('opacity', 1);
         }
         
         //Get the current entity info
@@ -618,7 +641,7 @@ VASIR_ENGINE.functions.set_selected_entity = function(params){
         //Update the log
         VASIR_ENGINE.functions.update_log({
             'message': 'Removed entity from selection'});
-        $('entity_action_wrapper').fade(0);
+        document.id('entity_action_wrapper').setStyle('opacity', 0);
     }
 }
 //============================================================================

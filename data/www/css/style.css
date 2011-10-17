@@ -91,10 +91,6 @@ h1 {
     text-shadow:0 2px 2px #ffffff;
 }
 h2 {
-    /*
-    color:#7291AD;
-    color: #2C2D32;
-    */
     color: #555555;
     font-size:2em;
     margin:0 0 .5% 0;
@@ -389,6 +385,89 @@ div {
     top:0;
     z-index:100;
 }
+
+/* ===================================================================== 
+ * Entity Info
+ * ===================================================================== */
+/* The entity info wrapper appears above everything */
+#entity_information_wrapper {
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -moz-box-shadow: 0 0 25px #343434;
+    -webkit-box-shadow:0 0 25px #343434;
+    box-shadow: 0 0 25px #343434;
+
+    background: #f0f0f0;
+    border: solid 1px #808080;
+    bottom:10%;
+    display: none;
+    left:10%;
+    padding:0;
+    position: absolute;
+    right:10%;
+    top:50px;
+    z-index:9999;
+}
+    #entity_information_header {
+        background: -webkit-gradient(linear,0% 0%,0% 100%,from(#e3e3e3),to(#b5b5b5));
+        background: -moz-linear-gradient(linear,0% 0%,0% 100%,from(#e3e3e3),to(#b5b5b5));
+        background: -webkit-linear-gradient(top, #e3e3e3, #b5b5b5);
+        border-bottom:1px solid #707070;
+        border-top:1px solid #f0f0f0;
+        padding:5px 20px;
+        position:relative;
+        text-shadow: 0 0 1px #f0f0f0 !important;
+    }
+        #entity_information_header h2 {
+            color: #404040 !important;
+        }
+        #entity_information_close_wrapper {
+            position:absolute;
+            right:0;
+            top:-1px;
+        }
+            #entity_information_close {
+                -moz-box-shadow: 0 0 25px #343434;
+                -webkit-box-shadow:0 0 25px #343434;
+                box-shadow: 0 0 25px #343434;
+            }
+    /* ===================================================================== 
+     * D3 Graph styles
+     * ===================================================================== */
+    /* Network graph d3 container */
+    #entity_information_network_container {
+        border:1px solid #707070;
+        display:block;
+        height:500px;
+        width:500px;
+    }
+       #entity_information_network_container path.link {
+          fill: none;
+          stroke: #666;
+          stroke-width: 1.5px;
+        }
+
+        #entity_information_network_container marker#positive {
+          fill: green;
+        }
+
+        #entity_information_network_container path.link.positive {
+          stroke: green;
+        }
+        #entity_information_network_container path.link.negative{
+          stroke: red;
+        }
+
+        #entity_information_network_container path.link.neutral {
+          stroke-dasharray: 0,2 1;
+        }
+
+        #entity_information_network_container circle {
+          fill: #ccc;
+          stroke: #333;
+          stroke-width: 1.5px;
+        }
 
 /* ========================================================================    
  * Footer                              

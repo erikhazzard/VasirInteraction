@@ -15,12 +15,12 @@ window.addEvent('domready', function(e){
     //-----------------------------------
     //ENGINE Actions
     //-----------------------------------
-    $('add_entity').addEvent('click', function(e){
+    document.id('add_entity').addEvent('click', function(e){
         //Fire off the add_entity action
         VASIR_ENGINE.functions.add_entity();
     });
 
-    $('get_entities').addEvent('click', function(e){
+    document.id('get_entities').addEvent('click', function(e){
         //Fire off the add_entity action
         VASIR_ENGINE.functions.get_entities();
     });
@@ -28,19 +28,21 @@ window.addEvent('domready', function(e){
     //-----------------------------------
     //ENTITY Actions
     //-----------------------------------
-    $('clear_entity_selection').addEvent('click', function(e){
+    document.id('clear_entity_selection').addEvent('click', function(e){
         //Set the target to nothing
         VASIR_ENGINE.functions.set_selected_entity();
     });   
 
-    $('get_entity_info').addEvent('click', function(e){
+    document.id('get_entity_info').addEvent('click', function(e){
         //Fire off the add_entity action
-        VASIR_ENGINE.functions.get_entity_information();
+        VASIR_ENGINE.functions.get_entity_information({
+            show_info_window: true
+        });
     });
-    $('set_entity_target').addEvent('click', function(e){
+    document.id('set_entity_target').addEvent('click', function(e){
         VASIR_ENGINE.functions.toggle_target_selection_mode();
     });
-    $('converse').addEvent('click', function(e){
+    document.id('converse').addEvent('click', function(e){
         VASIR_ENGINE.functions.converse();
     });
 
@@ -48,12 +50,23 @@ window.addEvent('domready', function(e){
     //Misc Actions
     //-----------------------------------
     //Clear log function
-    $('clear_log').addEvent('click', function(e){
+    document.id('clear_log').addEvent('click', function(e){
         e.preventDefault();
-        $('engine_log_ul').empty();
-        $('engine_log').highlight('#ababab');
+        document.id('engine_log_ul').empty();
+        document.id('engine_log').highlight('#ababab');
 
     });
+
+    //-----------------------------------
+    //
+    //Entity Information Window
+    //
+    //-----------------------------------
+    document.id('entity_information_close').addEvent('click', function(e){
+        e.preventDefault();
+        document.id('entity_information_wrapper').setStyle('display', 'none');
+    });
+
 
     //-----------------------------------
     //Call VASIR_ENGINE initialization function
