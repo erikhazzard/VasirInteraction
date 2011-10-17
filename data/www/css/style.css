@@ -439,10 +439,11 @@ div {
     #entity_information_network_container {
         border:1px solid #707070;
         display:block;
+        font: 10px Verdana;
         height:500px;
         width:500px;
     }
-       #entity_information_network_container path.link {
+        #entity_information_network_container path.link {
           fill: none;
           stroke: #666;
           stroke-width: 1.5px;

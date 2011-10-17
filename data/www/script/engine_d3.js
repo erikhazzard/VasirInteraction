@@ -111,8 +111,8 @@ VASIR_ENGINE.D3.functions.setup_network_graph = function(params){
         .nodes(d3.values(nodes))
         .links(entity_links)
         .size([svg_w, svg_h])
-        .linkDistance(60)
-        .charge(-300)
+        .linkDistance(40)
+        .charge(-120)
         .on("tick", tick)
         .start();
 
