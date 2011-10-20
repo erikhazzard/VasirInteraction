@@ -244,9 +244,9 @@ VASIR_ENGINE.canvas.functions.select_entity = function(params, event_type){
 //---------------------------------------
 VASIR_ENGINE.canvas.functions.init = function(){
     //Get canvas object
-    VASIR_ENGINE.canvas._canvas = $('canvas');
-    VASIR_ENGINE.canvas.height = parseInt($('canvas').getStyle('height'));
-    VASIR_ENGINE.canvas.width = parseInt($('canvas').getStyle('width'));
+    VASIR_ENGINE.canvas._canvas = $('#canvas')[0];
+    VASIR_ENGINE.canvas.height = parseInt($('#canvas').css('height'));
+    VASIR_ENGINE.canvas.width = parseInt($('#canvas').css('width'));
 
     //Get the context object
     VASIR_ENGINE.canvas.context = VASIR_ENGINE.canvas._canvas.getContext('2d');
@@ -254,7 +254,7 @@ VASIR_ENGINE.canvas.functions.init = function(){
     //-----------------------------------
     //Add events
     //-----------------------------------
-    VASIR_ENGINE.canvas._canvas.addEvent('click', function(e){
+    $(VASIR_ENGINE.canvas._canvas).bind('click', function(e){
         VASIR_ENGINE.canvas.functions.select_entity({
             e: e,
             event_type: 'click'

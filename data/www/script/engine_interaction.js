@@ -10,7 +10,7 @@
 //Main App Object
 //============================================================================
 var VASIR_ENGINE = {
-    '_HOST_NAME': '',
+    '_HOST_NAME': document.domain,
 
     //Store reference to functions
     'functions': {
@@ -78,10 +78,11 @@ var VASIR_ENGINE = {
 //---------------------------------------
 VASIR_ENGINE.functions.add_entity = function(){
     //Set up the request object and send it
-    var req = new Request.JSON({
+    $.ajax({
         url: '/create_entity/',
-        secure: true,
-        onRequest: function(){
+        method: 'GET',
+        dataType: 'json',
+        beforeSend: function(){
             //---------------------------
             //Call this when request is made
             //---------------------------
@@ -90,12 +91,12 @@ VASIR_ENGINE.functions.add_entity = function(){
                 {'message': 'Sending request to create entity...',
                 'style': 'waiting'});
         },
-        onSuccess: function(res, txt){
+        success: function(res){
+            res = eval(res);
             //---------------------------
             //Call this when request succeeds
             //---------------------------
             //decode the JSON response
-            res = JSON.decode(res);
             //Update the engine log
             VASIR_ENGINE.functions.update_log({
                 'message': 'Entity Created! ID: ' + res.entity_id,
@@ -119,7 +120,7 @@ VASIR_ENGINE.functions.add_entity = function(){
             //Also, update the list of entities
             VASIR_ENGINE.functions.get_game_state_request();
         },
-        onFailure: function(res){
+        error: function(res){
             //---------------------------
             //Call this when request fails
             //---------------------------
@@ -127,8 +128,8 @@ VASIR_ENGINE.functions.add_entity = function(){
                 'message': 'Error!: ' + res.message,
                 'style': 'error'});
         }
-
-    }).send()
+    });
+    return true;
 }
 
 //---------------------------------------
@@ -138,22 +139,23 @@ VASIR_ENGINE.functions.add_entity = function(){
 //  -Sends a request to the server to get all the current entities.
 //---------------------------------------
 VASIR_ENGINE.functions.get_game_state_request = function(){
-    var req = new Request.JSON({
+    $.ajax({
         url: '/get_entities/',
-        secure: true,
-        onRequest: function(){
+        method: 'GET',
+        dataType: 'json',
+        beforeSend: function(){
             VASIR_ENGINE.functions.update_log(
                 {'message': 'Sending request to get all entities...',
                 'style': 'waiting'});
 
         },
-        onSuccess: function(res, txt){
+        success: function(res){
             VASIR_ENGINE.functions.update_game_state({
-                game_state: res,
+                game_state: eval(res),
                 suppress_log: false
             });
         },
-        onFailure: function(res){
+        error: function(res){
             //---------------------------
             //Call this when request fails
             //---------------------------
@@ -162,7 +164,7 @@ VASIR_ENGINE.functions.get_game_state_request = function(){
                 'style': 'error'});
         }
 
-    }).send()
+    });
 }
 
 //---------------------------------------
@@ -196,7 +198,7 @@ VASIR_ENGINE.functions.update_game_state = function(params){
     }
 
     //decode the JSON response
-    res = JSON.decode(game_state);
+    res = game_state;
 
     //Update the engine log
     if(suppress_log === false){
@@ -206,7 +208,7 @@ VASIR_ENGINE.functions.update_game_state = function(params){
     }
         
     //Clear out the existing elements
-    document.id('entities_list_ul').empty();
+    $('#entities_list_ul').empty();
 
     //Loop through the returned entities and update the 
     //  VASIR_ENGINE.entities object
@@ -214,42 +216,41 @@ VASIR_ENGINE.functions.update_game_state = function(params){
         //Add the entity info
         VASIR_ENGINE.entities[res[i].id] = res[i];
 
-        var list_element = new Element('li', {
+        var list_element = $('', {
+            'type': 'li',
             'id': 'entity_' + res[i].id,
         });
 
         //Link (button)
-        list_element.adopt(new Element('a', {
+        list_element.append( $('<a/>', {
             'href': '#',
-            'html': res[i].id,
+            'text': res[i].id,
             'class':'button',
-            'events': {
-                'click': function(index, entity_id){
-                    return function(){
-                        //We need to use a closure here to maintain
-                        //  state of the loop variable
-                        //Perform an action based on the selection mode
-                        if(VASIR_ENGINE.selection_mode === null){
-                            //select the entity they click on
-                            VASIR_ENGINE.functions.set_selected_entity(
-                                {'entity_id':entity_id});
-                        }else if(VASIR_ENGINE.selection_mode ===
-                            'entity_target'){
+            'click': function(index, entity_id){
+                return function(){
+                    //We need to use a closure here to maintain
+                    //  state of the loop variable
+                    //Perform an action based on the selection mode
+                    if(VASIR_ENGINE.selection_mode === null){
+                        //select the entity they click on
+                        VASIR_ENGINE.functions.set_selected_entity(
+                            {'entity_id':entity_id});
+                    }else if(VASIR_ENGINE.selection_mode ===
+                        'entity_target'){
 
-                            VASIR_ENGINE.functions.set_entity_target({
-                                'target_entity_id': entity_id 
-                            });
-                        }
-                    }}(i, res[i].id)
-            }
-        })); 
+                        VASIR_ENGINE.functions.set_entity_target({
+                            'target_entity_id': entity_id 
+                        });
+                    }
+                }}(i, res[i].id)
+        }));
 
         //Add links to the entities list element
-        document.id('entities_list_ul').adopt(list_element);
+        $('#entities_list_ul').append(list_element);
 
     }
     //Update the entities list header
-    document.id('entities_list_header').innerHTML = 'All ' 
+    $('#entities_list_header').innerHTML = 'All ' 
         + res.length + ' Entities';
 }
 //============================================================================
@@ -288,11 +289,13 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
     }else if(typeof params === 'string'){
         target = params;
     }
+
     //Set up the request object and send it
-    var req = new Request.JSON({
+    $.ajax({
         url: '/get_entity_info/' + target + '/',
-        secure: true,
-        onRequest: function(){
+        type: 'GET',
+        dataType: 'json',
+        beforeSend: function(){
             //---------------------------
             //Call this when request is made
             //---------------------------
@@ -303,21 +306,21 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
                 'suppress_log': suppress_log});
 
         },
-        onSuccess: function(res, txt){
+        success: function(res){
             //---------------------------
             //Call this when request succeeds
             //---------------------------
             //decode the JSON response
-            res = JSON.decode(res);
+            res = eval(res);
 
             //Update the entities that this app keeps track of
             VASIR_ENGINE.entities[target] = res;
 
             //Update the text that shows the target entity info 
             if( res.target !== undefined) {
-                document.id('target_entity_id').set('html', res.target);
+                $('#target_entity_id').html(res.target);
             }else{
-                document.id('target_entity_id').set('html', 'None');
+                $('#target_entity_id').html('None');
             }
 
             //Update the engine log
@@ -336,7 +339,7 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
             //Show info window if caller asked for it
             if(show_info_window === true){
                 //Show the window
-                document.id('entity_information_wrapper').setStyle(
+                $('#entity_information_wrapper').css(
                     'display', 'block');
 
                 //Fill it with data
@@ -353,7 +356,7 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
             }
 
         },
-        onFailure: function(res){
+        error: function(res){
             //---------------------------
             //Call this when request fails
             //---------------------------
@@ -361,8 +364,7 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
                 'message': 'Error!: ' + res.message,
                 'style': 'error'});
         }
-
-    }).send()
+    });
 }
 
 //---------------------------------------
@@ -395,11 +397,10 @@ VASIR_ENGINE.functions.toggle_target_selection_mode = function(params){
         VASIR_ENGINE.selection_mode = 'entity_target';
         //Add the 'button_active' class to the set_entity_target button to indicate
         //  the selection mode has changed
-        document.id('set_entity_target').addClass('button_active');
+        $('#set_entity_target').addClass('button_active');
         
         //Highlight the entity list
-        document.id('entities_list_header').setStyle('background', 'rgba(240,240,100,.3)')
-        document.id('entities_list').highlight();
+        $('#entities_list_header').css('background', 'rgba(240,240,100,.3)')
     }else if((
         desired_selection_mode === undefined 
         && VASIR_ENGINE.selection_mode === 'entity_target') || (
@@ -409,10 +410,10 @@ VASIR_ENGINE.functions.toggle_target_selection_mode = function(params){
         VASIR_ENGINE.selection_mode = null; 
         //Remove the 'button_active' class to the set_entity_target button to indicate
         //  the selection mode has changed
-        document.id('set_entity_target').removeClass('button_active');
+        $('#set_entity_target').removeClass('button_active');
 
         //Unhighlight the entity list
-        document.id('entities_list_header').setStyle('background', 'none');
+        $('#entities_list_header').css('background', 'none');
     }
 
 };
@@ -439,12 +440,13 @@ VASIR_ENGINE.functions.set_entity_target = function(params){
     }
 
     //Set up the request object and send it
-    var req = new Request.JSON({
+    $.ajax({
         url: '/set_entity_target/' 
             + source_entity + '/'
             + target_entity_id + '/',
-        secure: true,
-        onRequest: function(){
+        method: 'GET',
+        dataType: 'json',
+        beforeSend: function(){
             //---------------------------
             //Call this when request is made
             //---------------------------
@@ -454,18 +456,17 @@ VASIR_ENGINE.functions.set_entity_target = function(params){
                 'style': 'waiting'});
 
         },
-        onSuccess: function(res, txt){
+        success: function(res){
             //---------------------------
             //Call this when request succeeds
             //---------------------------
             //decode the JSON response
-            res = JSON.decode(res);
 
             //Update the entities that this app keeps track of
             VASIR_ENGINE.entities[source_entity].target = target_entity_id;
 
             //Update the text that shows the target entity info
-            document.id('target_entity_id').set('html', target_entity_id);
+            $('#target_entity_id').html(target_entity_id);
 
             //Update the engine log
             VASIR_ENGINE.functions.update_log({
@@ -483,7 +484,7 @@ VASIR_ENGINE.functions.set_entity_target = function(params){
             }
 
         },
-        onFailure: function(res){
+        error: function(res){
             //---------------------------
             //Call this when request fails
             //---------------------------
@@ -492,7 +493,7 @@ VASIR_ENGINE.functions.set_entity_target = function(params){
                 'style': 'error'});
         }
 
-    }).send()
+    })
 }
 
 //---------------------------------------
@@ -506,11 +507,12 @@ VASIR_ENGINE.functions.converse = function(params){
 
 
     //Set up the request object and send it
-    var req = new Request.JSON({
+    $.ajax({
         url: '/converse/' 
             + source_entity + '/',
-        secure: true,
-        onRequest: function(){
+        method: 'GET',
+        dataType: 'json',
+        beforeSend: function(){
             //---------------------------
             //Call this when request is made
             //---------------------------
@@ -520,15 +522,13 @@ VASIR_ENGINE.functions.converse = function(params){
                 'style': 'waiting'});
 
         },
-        onSuccess: function(res, txt){
+        success: function(res){
             //---------------------------
             //Call this when request succeeds
             //---------------------------
             //decode the JSON response
-            res = JSON.decode(res);
 
             if (res.error !== undefined){
-                document.id('entities_list').highlight();
                 VASIR_ENGINE.functions.update_log({
                     'message':  'Entity has no target',
                     'style': 'error'});
@@ -545,7 +545,7 @@ VASIR_ENGINE.functions.converse = function(params){
             });
 
         },
-        onFailure: function(res){
+        error: function(res){
             //---------------------------
             //Call this when request fails
             //---------------------------
@@ -554,7 +554,7 @@ VASIR_ENGINE.functions.converse = function(params){
                 'style': 'error'});
         }
 
-    }).send()
+    });
 }
 
 //============================================================================
@@ -587,13 +587,13 @@ VASIR_ENGINE.functions.update_log = function(params){
     //  Add a new list element to the log UL element
     if(suppress_log !== true){
         //Don't update the log if suppress_log is passed in
-        document.id('engine_log_ul').adopt(new Element('li', {
+        $('#engine_log_ul').append($('<li/>', {
             'class': (style !== undefined) ? style : '',
             'html': (message !== undefined) ? message : ''
         }));
 
         //Scroll to bottom of the log
-        document.id('engine_log').scrollTop = document.id('engine_log').scrollHeight;
+        $('#engine_log').scrollTop = $('#engine_log').scrollHeight;
     }
 }
 
@@ -629,9 +629,9 @@ VASIR_ENGINE.functions.set_selected_entity = function(params){
             'style': 'success'});
 
         //Update the entity actions box
-        document.id('selected_entity').innerHTML = target;
-        if(parseInt(document.id('entity_action_wrapper').getStyle('opacity')) < 1){
-            document.id('entity_action_wrapper').setStyle('opacity', 1);
+        $('#selected_entity').innerHTML = target;
+        if(parseInt($('#entity_action_wrapper').css('opacity')) < 1){
+            $('#entity_action_wrapper').css('opacity', 1);
         }
         
         //Get the current entity info
@@ -641,7 +641,7 @@ VASIR_ENGINE.functions.set_selected_entity = function(params){
         //Update the log
         VASIR_ENGINE.functions.update_log({
             'message': 'Removed entity from selection'});
-        document.id('entity_action_wrapper').setStyle('opacity', 0);
+        $('#entity_action_wrapper').css('opacity', 0);
     }
 }
 //============================================================================
