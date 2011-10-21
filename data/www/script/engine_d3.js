@@ -101,10 +101,10 @@ VASIR_ENGINE.D3.functions.setup_network_graph = function(params){
     });
 
     //Setup width and height of the svg area
-    var svg_w = parseInt(document.id(
-        'entity_information_network_container').getStyle('width'));
-    var svg_h = parseInt(document.id(
-        'entity_information_network_container').getStyle('height'));
+    var svg_w = parseInt($(
+        '#entity_information_network_container').css('width'));
+    var svg_h = parseInt($(
+        '#entity_information_network_container').css('height'));
 
     //Setup the D3 force layout
     var force = d3.layout.force()

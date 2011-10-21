@@ -180,7 +180,7 @@ VASIR_ENGINE.canvas.functions.select_entity = function(params, event_type){
     }
 
     //Get mouse position from passed in event
-    var mouse_position = {x: e.event.offsetX, y: e.event.offsetY};
+    var mouse_position = {x: e.offsetX, y: e.offsetY};
     var cur_entity, pos_x, pos_y = undefined;
 
     //Loop through each entity and determine if entity was clicked
@@ -211,12 +211,15 @@ VASIR_ENGINE.canvas.functions.select_entity = function(params, event_type){
                         //If they are not in 'SET TARGET' mode (meaning an entity
                         //  already selected and they are setting the targeted
                         //  entity's target)
-                        if(VASIR_ENGINE.selection_mode === null){
+                        //Also, pressing shift key will enable entity's target
+                        //  selection mode
+                        if(VASIR_ENGINE.selection_mode === null 
+                            && e.shiftKey !== true){
                             VASIR_ENGINE.functions.set_selected_entity({
                                 entity_id: cur_entity.id
                             });
                         }else if(VASIR_ENGINE.selection_mode ===
-                            'entity_target'){
+                            'entity_target' || e.shiftKey === true){
                             VASIR_ENGINE.functions.set_entity_target({
                                 'target_entity_id': cur_entity.id 
                             });

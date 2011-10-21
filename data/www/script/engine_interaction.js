@@ -198,7 +198,7 @@ VASIR_ENGINE.functions.update_game_state = function(params){
     }
 
     //decode the JSON response
-    res = game_state;
+    res = eval(game_state);
 
     //Update the engine log
     if(suppress_log === false){
@@ -216,8 +216,7 @@ VASIR_ENGINE.functions.update_game_state = function(params){
         //Add the entity info
         VASIR_ENGINE.entities[res[i].id] = res[i];
 
-        var list_element = $('', {
-            'type': 'li',
+        var list_element = $('<li/>', {
             'id': 'entity_' + res[i].id,
         });
 
@@ -333,7 +332,7 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
 
             //DEV: Log it to the console
             try{
-                console.log(res);
+                //console.log(res);
             }catch(err){}
 
             //Show info window if caller asked for it
@@ -629,7 +628,7 @@ VASIR_ENGINE.functions.set_selected_entity = function(params){
             'style': 'success'});
 
         //Update the entity actions box
-        $('#selected_entity').innerHTML = target;
+        $('#selected_entity').html(target);
         if(parseInt($('#entity_action_wrapper').css('opacity')) < 1){
             $('#entity_action_wrapper').css('opacity', 1);
         }
