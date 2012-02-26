@@ -554,7 +554,7 @@ VASIR_ENGINE.functions.converse = function(params){
         }
 
     });
-}
+};
 
 //============================================================================
 //MISC ACTIONS
@@ -568,7 +568,8 @@ VASIR_ENGINE.functions.converse = function(params){
 //---------------------------------------
 VASIR_ENGINE.functions.update_log = function(params){
     //Set an empty message and style
-    var message, style, suppress_log = undefined;
+    var message, style, log_el, suppress_log = undefined;
+    log_el = $('#engine_log');
 
     //Check to see if they passed in an object or a string
     if( typeof params === 'object' ){
@@ -593,8 +594,10 @@ VASIR_ENGINE.functions.update_log = function(params){
 
         //Scroll to bottom of the log
         $('#engine_log').scrollTop = $('#engine_log').scrollHeight;
+        log_el.animate({ scrollTop: log_el.prop('scrollHeight') - log_el.height() },
+            30);
     }
-}
+};
 
 //---------------------------------------
 //set_selected_entity( PARAMS({entity_id}) ):

@@ -1,0 +1,1098 @@
+/* ========================================================================    
+ *
+ * style.css
+ * ------------
+ *
+ * Main CSS style file, applied to all pages
+ *
+ * ======================================================================== */
+/* ========================================================================    
+ *
+ * LESS Declarations
+ *
+ * ======================================================================== */
+/* Colors */
+@color_black: #2c2d32;
+@grey_border_color: #cdcdcd;
+
+@inner_content_background_color: #fdfdfd;
+@inner_content_grey_border: #d7d7d7;
+
+@normal_font: 'Cantarell', Arial, Verdana, sans-serif;
+.normal_button_background(){
+    background: #dedede;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#d1d1d1));
+    background: -moz-linear-gradient(top, #f0f0f0, #d1d1d1);
+}
+
+/*Styles*/
+@light_box_shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+@dark_box_shadow: 0 0 22px rgba(0, 0, 0, 0.9);
+.rounded_corners(@radius: 3px){
+    border-radius: @radius !important;
+    -webkit-border-radius: @radius !important;
+    -moz-border-radius: @radius !important;
+}
+
+/* Layout Related */
+@header_height: 55px;
+@footer_height: 25px;
+@inner_padding_width: 2%;
+@content_top_padding: 20px;
+
+/* Left side stuff */
+@left_toolbox_wrapper_width: 41%;
+@left_toolbox_tabs_height: 42px;
+@configuration_button_height: 50px;
+@config_label_width: 125px;
+
+/* Right side stuff */
+@code_wrapper_height: 100%;
+/* ========================================================================    
+ *
+ * Base Styles 
+ *
+ * ======================================================================== */
+/* Google Fonts */
+@import url("http://fonts.googleapis.com/css?family=Ubuntu+Mono|Cantarell|Architects+Daughter&.css");
+@font-face {
+  font-family: 'Cantarell';
+  font-style: italic;
+  font-weight: normal;
+  src: local('Cantarell Oblique'), local('Cantarell-Oblique'), url('http://themes.googleusercontent.com/static/fonts/cantarell/v1/Qd6zZq_wf1596L3V_8MIs4bN6UDyHWBl620a-IRfuBk.woff') format('woff');
+}
+@font-face {
+  font-family: 'Cantarell';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Cantarell Bold'), local('Cantarell-Bold'), url('http://themes.googleusercontent.com/static/fonts/cantarell/v1/Yir4ZDsCn4g1kWopdg-ehHhCUOGz7vYGh680lGh-uXM.woff') format('woff');
+}
+@font-face {
+  font-family: 'Cantarell';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Cantarell Regular'), local('Cantarell-Regular'), url('http://themes.googleusercontent.com/static/fonts/cantarell/v1/V86VyqXbc09Sss3BPsMj1z8E0i7KZn-EPnyo3HZu7kw.woff') format('woff');
+}
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Inconsolata'), url('http://themes.googleusercontent.com/static/fonts/inconsolata/v1/BjAYBlHtW3CJxDcjzrnZCIbN6UDyHWBl620a-IRfuBk.woff') format('woff');
+}
+@font-face {
+  font-family: 'IM Fell English';
+  font-style: normal;
+  font-weight: normal;
+  src: local('IM FELL English Roman'), local('IM_FELL_English_Roman'), url('http://themes.googleusercontent.com/static/fonts/imfellenglish/v1/xwIisCqGFi8pff-oa9uSVMyhYfqH3mbn79-t0w0Xep4.woff') format('woff');
+}
+@font-face {
+  font-family: 'Questrial';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Questrial'), local('Questrial-Regular'), url('http://themes.googleusercontent.com/static/fonts/questrial/v1/MYWJ4lYm5dbZ1UBuYox79D8E0i7KZn-EPnyo3HZu7kw.woff') format('woff');
+}
+
+html, body {
+    background:#f4f4f4 url(../img/bg_squares.png);
+    bottom:0;
+    color: @color_black;
+    font-family:@normal_font;
+    left:0;
+    margin:0;
+    padding:0;
+    position:absolute;
+    right:0;
+    text-shadow:0 0 1px #ffffff;
+    top:0;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+a {
+    color:#7291AD;
+    font-weight:bold;
+    padding:5px;
+    text-decoration:none;
+} 
+a:hover {
+    color:#A28167;
+    text-decoration:underline;
+}
+
+/* --------------------------------------
+ * Headers 
+ * -------------------------------------- */
+h1,h2,h3,h4,h5,h6, #header{
+    font-family:'Architects Daughter', Arial, Verdana, sans-serif; 
+    margin:0;
+    padding:0;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight:bold;
+}
+h2 {
+    font-size:1.7em;
+    font-weight:bold;
+}
+
+/* --------------------------------------
+ * Pre (for code) 
+ * -------------------------------------- */
+pre, .code_style {
+    background:#383838;
+    border:1px solid #111111;
+    color:#ffffff;
+    font-size:1em;
+    font-family:'Ubuntu Mono', sans-serif;
+    padding:5px;
+    text-shadow: 0 0 1px @color_black !important;
+}
+/* --------------------------------------
+ * Lists 
+ * -------------------------------------- */
+ul, li {
+}
+
+
+/* --------------------------------------
+ * Divs 
+ * -------------------------------------- */
+div {
+    text-overflow: ellipsis;
+}
+
+/* --------------------------------------
+ * Inputs
+ * -------------------------------------- */
+input[type='text'], input[type='email'], input[type='number'],
+input[type='submit'], input[type='password'], 
+input[type='search'], input[type='datetime'], 
+input[type='time'], textarea, select {
+    -moz-box-shadow: 0 1px 4px #e0e0e0 inset;
+    -webkit-box-shadow: 0 1px 4px #e0e0e0 inset;
+    box-shadow: 0 1px 4px #e0e0e0 inset;
+    border: 1px solid #a0a0a0;
+    color: @color_black;
+    font-family: @normal_font, Arial, Verdana, sans-serif;
+    font-size:1em;
+    padding: 2px;
+}
+input:focus, textarea:focus {
+    -moz-box-shadow: 0 0 10px #42607a !important;
+    -webkit-box-shadow: 0 0 10px #42607a !important;
+    box-shadow: 0 0 10px #42607a !important;
+    border: 1px solid #324d62;
+}
+
+/*Placeholder style*/
+::-webkit-input-placeholder {
+    color: #ababab;}
+:-moz-placeholder {
+    color: #ababab;
+} 
+/* ========================================================================    
+ *
+ *                              LAYOUT
+ *
+ * ======================================================================== */
+#site_wrapper {
+    bottom:0;
+    left:0;
+    position:absolute;
+    right:0;
+    top:0;
+}
+
+/* ========================================================================    
+ * Header
+ * ======================================================================== */
+#header_wrapper {
+    -moz-box-shadow: 0 2px 7px #707070;
+    -webkit-box-shadow: 0 2px 7px #707070;
+    box-shadow: 0 2px 7px #707070;
+
+    background:#336699 url(../img/header_bg.jpg);
+    border-bottom:1px solid #324D62;
+    color:#f4f4f4;
+    height: @header_height;
+    position:relative;
+    z-index:700;
+}
+    #header_wrapper h1 {
+        font-size:3.0em;
+        text-shadow: 0 3px 4px @color_black;
+    }
+    #header {
+        border-bottom:1px solid #617D91;
+        bottom:1%;
+        left:0;
+        padding:0 @inner_padding_width;
+        position:absolute;
+        right:0;
+        top:0;
+    }
+
+/* ========================================================================    
+ *
+ * Content
+ *
+ * ======================================================================== */
+#content_wrapper {
+    bottom: @footer_height;
+    left:0;
+    position:absolute;
+    top: @header_height;
+    right:0;
+}
+    #content {
+        bottom: @content_top_padding;
+        left: @inner_padding_width;
+        position:absolute;
+        right: @inner_padding_width;
+        top: @content_top_padding;
+    }
+    /* =====================================================================
+     *
+     * Left side toolbox
+     *
+     * ===================================================================== */
+    #left_toolbox_wrapper {
+        .rounded_corners(3px);
+        box-shadow: @light_box_shadow;
+        -moz-box-shadow: @light_box_shadow;
+        -webkit-box-shadow: @light_box_shadow;
+        border: 1px solid #ABABAB;
+        bottom: 0;
+        left: 0;
+        position:absolute;
+        top: 0;
+        width:@left_toolbox_wrapper_width;
+    }
+        #left_toolbox {
+            .rounded_corners(3px);
+            background: #eeeeee;
+            border:1px solid #ffffff;
+            bottom:0;
+            left:0;
+            position:absolute;
+            right:0;
+            top:0;
+        }
+
+        /* ==================================
+         *  Editing Tabs
+         * ================================== */
+        #tabs_wrapper {
+            height: @left_toolbox_tabs_height;
+            left:0;
+            right:0;
+            position:absolute;
+            top:0;
+        }
+        #tabs_wrapper ul {
+            bottom:0;
+            left:0;
+            margin:0; 
+            padding:7px 0 0 0;
+            position:absolute;
+            right:0;
+            top:0;
+            width: 100%;
+        }
+            #tabs_wrapper ul li {
+                cursor: pointer;
+                float: left;
+                margin:0 3.4% 0 1%;
+                padding:4px 0;
+                text-align:center;
+                width:28%;
+            }
+            #tabs_wrapper .button{
+                background: #f3f3f3;
+                background: -webkit-gradient(linear,0% 40%,0% 70%,from(#F5F5F5),to(#e7e7e7)) ;
+                background: -moz-linear-gradient(linear,0% 40%,0% 70%,from(#F5F5F5),to(#e7e7e7)) ;
+                font-size:1.1em;
+                font-weight:bold;
+            }
+
+        /* ==================================
+         *  Configuration options (current editing tool options)
+         * ================================== */
+        #configuration_options_wrapper {
+            background: @inner_content_background_color;
+            border:1px solid #bcbcbc;
+            bottom: 0;
+            left:0;
+            margin:5px;
+            overflow:hidden;
+            position: absolute;
+            right:0;
+            top: @left_toolbox_tabs_height + 5;
+        }
+            .configuration_options {
+                bottom:0;
+                display: none;
+                left:0;
+                overflow:auto;
+                padding: 5px;
+                position:absolute;
+                right:0;
+                top:0;
+            }
+            
+            .configuration_options ul {
+                margin:0;
+                padding:0;
+            }
+            .configuration_options li {
+                border:1px solid  @inner_content_background_color;
+                height:36px;
+                list-style: none;
+                margin:.5% 0;
+                overflow: hidden;
+                padding:.5% 0;
+                position:relative;
+                width:100%;
+            }
+                /* Labels for each input element */
+                .configuration_options li label{
+                    border-right: 1px solid @inner_content_grey_border;
+                    cursor: pointer;
+                    display: block;
+                    font-weight: bold;
+                    padding:4px 15px 0 0;
+                    text-align: right;
+                    width: @config_label_width;
+                }
+                .configuration_options li input,
+                .configuration_options li select,
+                .configuration_options li textarea {
+                    bottom:3px;
+                    left: @config_label_width + 30px;
+                    position:absolute;
+                    right:35px;
+                    top:3px;
+                }
+
+                /* Style for item hover */
+                .configuration_options .hover {
+                    background: #eaeaea;
+                    border: 1px solid @inner_content_grey_border;
+                }
+
+                /* Header item style */
+                .configuration_options .header_item {
+                    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.5) !important;
+                    -moz-box-shadow: 0 1px 3px rgba(0,0,0,.5) !important;
+                    box-shadow: 0 1px 3px rgba(0,0,0,.5) !important;
+
+                    background: rgba(60,90,118, .8);
+                    background: -webkit-gradient(linear, left top, left bottom, from(#446380), to(#3c5a76));
+                    background: -moz-linear-gradient(top, #446380, #3c5a76);
+                    border: 1px solid #344e66 !important;
+                    color: #f7f7f7 !important;
+                    height:30px !important;
+                    text-shadow: 0 0 1px @color_black !important;
+                }
+                    .configuration_options .header_item h3 {
+                        font-family: @normal_font;
+                        padding: 0 0 0 10px !important;
+                    }
+
+                /* Help item style */
+                .configuration_options span.help {
+                    color: #808080 !important;
+                    font-size: .8em !important;
+                    margin:0 !important;
+                    padding: 2px 6px !important;
+                    position:absolute;
+                    right:3px;
+                    top:8px;
+                }
+
+                /*Set up styles for individual configuration item containers,
+                 *  for example an individual layer in the layer list */
+                .config_item_container {
+                    .rounded_corners(6px);
+                    height: auto !important;
+                    font-size:1em !important;
+                    margin:.5em 0 .5em 5% !important;
+                    min-height:32px !important;
+                    padding: 0 0 0 0 !important;
+                    position:relative;
+                    width:88% !important;
+                }
+                    .config_item_container.new_config_item {
+                        text-align:center;
+                    }
+                    .config_item_container .config_item_title {
+                        margin:2px 5px;
+                        padding:5px 10px;
+                    }
+                    .config_item_container.new_config_item .config_item_title{
+                        display:block;
+                        padding:5px 10px 0px 10px;
+                    }
+                    .config_item_container.new_config_item div {
+                        padding: 5px 10px;
+                    }
+                        .config_item_container .config_item_title_id {
+                            font-size:.8em;
+                            margin:0 0 0 2em;
+                        }
+                        .config_item_container .config_item_remove {
+                            background: url(../img/destroy.png) no-repeat 0 0;
+                            border: none !important;
+                            height:20px;
+                            margin: 0 !important;
+                            padding: 0 !important;
+                            position:absolute;
+                            right:10px;
+                            top:7px;
+                            width:20px;
+                        }
+                        .config_item_container .config_item_remove:hover {
+                            background: url(../img/destroy.png) no-repeat 0 -20px !important;
+                        }
+
+            /* =================================================
+            /* Content for the config items inner content - 
+             * meaning, individual layers or control
+             * ================================================= */
+            .config_item_inner_wrapper {
+                background: #f2f2f2;
+                display: none;
+                border:1px solid #cdcdcd;
+                font-size:.9em;
+                margin:2px 5px 5px 5px;
+                padding:4px;
+                position:relative;
+            }
+                    .config_item_container .form_wrapper li {
+                        border: 1px solid transparent;
+                        font-size:.9em;
+                        height:24px;
+                    }
+                    .config_item_container .form_wrapper li:hover {
+                        background: #fcfcfc;
+                    }
+                .config_item_container.hover {
+                    color: #111;
+                    border:1px solid #ababab !important;
+                    -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.4);
+                    -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.4);
+                    box-shadow: 0 0 7px rgba(0, 0, 0, 0.4);
+                    .normal_button_background;
+                }
+
+            /* =================================================
+             * The default / base window will show welcome / help text
+             * ================================================= */
+            #configuration_options_base {
+                display: block;
+            }
+                #configuration_options_base h3 {
+                    font-family: @normal_font !important;
+                }
+
+    /* =====================================================================
+     *
+     * Right side code / map output
+     *
+     * ===================================================================== */
+    #generated_output_wrapper {
+        .rounded_corners(3px);
+        box-shadow: @light_box_shadow;
+        -moz-box-shadow: @light_box_shadow;
+        -webkit-box-shadow: @light_box_shadow;
+        border: 1px solid #ABABAB;
+        bottom: 0;
+        left: 0;
+        left: @left_toolbox_wrapper_width + 3%;
+        position:absolute;
+        right:0;
+        top: 0;
+    }
+        #generated_output {
+            .rounded_corners(3px);
+            background: #eeeeee;
+            border:1px solid #ffffff;
+            bottom:0;
+            left:0;
+            position:absolute;
+            right:0;
+            top:0;
+        }
+
+        /* ==================================
+         *  Code output 
+         * ================================== */
+        #code_output_wrapper {
+            left:0;
+            height: @code_wrapper_height;
+            position:absolute;
+            right:0;
+            top:0;
+        }
+            #code_output_header {
+                height: @left_toolbox_tabs_height;
+                left:0;
+                right:0;
+                padding:5px 0 0 5px;
+                position:absolute;
+                top:0;
+            }
+                /*Select code button*/
+                .upper_right_button {
+                    position:absolute !important;
+                    right:0px !important;
+                    top:5px !important;
+                }
+            #code_wrapper {
+                background: #fdfdfd;
+                bottom: 0;
+                border:1px solid #bcbcbc;
+                left:0;
+                margin:5px;
+                overflow:hidden;
+                position: absolute;
+                right:0;
+                top: @left_toolbox_tabs_height + 5;
+            }
+                /* Actual code window */
+                #code {
+                    bottom:0;
+                    font-size: .8em !important;
+                    left:0;
+                    overflow: auto;
+                    margin:0;
+                    position:absolute;                    
+                    right:0;
+                    text-shadow: 0 0 1px @color_black !important;
+                    top:0;
+                }
+
+
+/* ========================================================================    
+ * Footer
+ * ======================================================================== */
+#footer_wrapper {
+    -moz-box-shadow: 0 -2px 7px #707070;
+    -webkit-box-shadow: 0 -2px 7px #707070;
+    box-shadow: 0 -2px 7px #707070;
+    background:#707070 url(../img/footer_bg.jpg);
+    border-top:1px solid #404040;
+    color:#c0c0c0;
+    bottom:0;
+    height:@footer_height;
+    left:0;
+    position:absolute;
+    right:0;
+    text-shadow: 0 0 1px @color_black;
+    z-index:800;
+}
+    #footer {
+        border-top:1px solid #808080;
+        bottom:0;
+        font-size:.8em;
+        left:0;
+        overflow: hidden;
+        padding:4px @inner_padding_width 0;
+        position:absolute;
+        right:0;
+        text-align: right;
+        top:0;
+    }
+        #footer a {
+            margin:0 1em 0 2em;
+        }
+        #footer a:hover {
+            text-shadow: 0 0 1px #000000 !important;
+        }
+        #footer .email {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+        }
+
+/* ========================================================================    
+ * Popup
+ * ======================================================================== */
+#popup_container_wrapper{
+    background:rgba(255,255,255,.8);
+    bottom:0;
+    display:none;
+    left:0;
+    position:absolute;
+    right:0;
+    top:0;
+    z-index:999;
+}
+#popup_container {
+    .rounded_corners(3px);
+    box-shadow: @dark_box_shadow;
+    -moz-box-shadow: @dark_box_shadow;
+    -webkit-box-shadow: @dark_box_shadow;
+    border: 1px solid #ABABAB;
+    bottom:10%;
+    left:20%;
+    position:absolute;
+    right:20%;
+    top: 15%;
+    z-index:999;
+}
+    #popup_container_inner {
+        .rounded_corners(3px);
+        background: #eeeeee;
+        border:1px solid #ffffff;
+        bottom:0;
+        left:0;
+        position:absolute;
+        right:0;
+        top:0;
+    }
+    #popup_container_wrapper h2 {
+        padding:10px 0 0 5px;
+    }
+    #popup { 
+        background: @inner_content_background_color;
+        border:1px solid #bcbcbc;
+        bottom: 0;
+        left:0;
+        margin:5px;
+        position: absolute;
+        right:0;
+        top: @left_toolbox_tabs_height + 5;
+    }
+
+/* ========================================================================    
+ * OL Type buttons in popup
+ * ======================================================================== */
+.ol_object_type_wrapper {
+    height: auto !important;
+    font-size:1em !important;
+    margin:.5em 0 .5em 5% !important;
+    min-height:38px !important;
+    padding: 0 0 0 0 !important;
+    position:relative;
+    width:88% !important;
+}
+.ol_object_type_wrapper li{
+    width: 100% !important;
+}
+/* ========================================================================    
+ *
+ * REUSABLE CLASSES 
+ *
+ * ======================================================================== */
+.align_right { text-align:right; }
+.center { text-align:center; }
+.center_image { display:block; text-align:center; }
+.clear { clear:both; }
+.hidden_element { display: none; }
+.visibility_none { opacity: 0; }
+.email {
+    unicode-bidi: bidi-override;
+    direction:rtl;
+}
+.font_small { font-size:.9em; }
+.grey_text {
+    color: #aeaeae;
+    text-shadow:1px 1px 0 #ffffff;
+}
+.grey_text a { color:#909090; }
+.grey_text a:hover { color:#707070; text-decoration:underline; }
+
+.margin_top { margin:4em 0 0 0; }
+/* ========================================================================    
+ * Google-like buttons
+ * ======================================================================== */
+.buttons {
+    float: left;
+    padding-bottom: 20px;
+    clear: both;
+}
+a.button, li.button, .help, .button, button {
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-transition: border-color .218s;
+    -moz-transition: border .218s;
+    -o-transition: border-color .218s;
+    transition: border-color .218s;
+    /*
+    font: bold 12px 'Questrial', Helvetica, Arial, sans-serif;
+    */
+    border: 1px solid #ACACAC;
+    border-top-color: #BDBDBD;
+    border-bottom-color: #949494;
+
+    color: @color_black;
+    cursor: pointer;
+    display: inline-block;
+    font-size:.9em;
+    font-weight:bold;
+    margin-right: 10px;
+    padding: 7px 12px;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #fff;
+
+
+    /* Darker buttons */
+    .normal_button_background;
+}
+a.button:hover, li.button:hover, .button_hover, .hover, button:hover {
+    color: #111;
+    border-color: #999;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+a.button:active, li.button:active, .tab_active, button:active, .active {
+    color: #000 !important;
+    border-color: #444 !important;
+    border:1px solid #979797 !important;
+    border-top:1px solid #707070 !important;
+    background: #000!important;
+    background: -webkit-gradient(linear, left top, left bottom, from(#c3c3c3), to(#ebebeb)) !important;
+    background: -moz-linear-gradient(top, #c3c3c3, #ebebeb) !important;
+    box-shadow: inset 2px 2px 2px rgba(0,0,0,.1) !important;
+    -webkit-box-shadow: inset 2px 2px 2px rgba(0,0,0,.1) !important;
+    -moz-box-shadow: inset 2px 2px 2px rgba(0,0,0,.1) !important;
+    -o-box-shadow:  inset 2px 2px 2px rgba(0,0,0,.1) !important;
+}
+a.left {
+    -webkit-border-top-right-radius: 0;
+    -moz-border-radius-topright: 0;
+    border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-bottomright: 0;
+    border-bottom-right-radius: 0;
+    margin: 0;
+}
+a.middle {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-left: solid 1px #f3f3f3;
+    margin: 0;
+    border-left: solid 1px rgba(255, 255, 255, 0);
+}
+a.middle:hover,
+a.right:hover { border-left: solid 1px #999 }
+a.right {
+    -webkit-border-top-left-radius: 0;
+    -moz-border-radius-topleft: 0;
+    border-top-left-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    border-bottom-left-radius: 0;
+    border-left: solid 1px #f3f3f3;
+    border-left: solid 1px rgba(255, 255, 255, 0);
+}
+a.big {
+    font-size: 16px;
+    padding: 10px 15px;
+}
+a.supersize {
+    font-size: 20px;
+    padding: 15px 20px;
+}
+a.save {
+    background: url(../img/sprite.png) 10px 7px no-repeat #f3f3f3;
+    padding-left: 30px;
+}
+a.add {
+    background: url(../img/sprite.png)  10px -27px no-repeat #f3f3f3;
+    padding-left: 30px;
+}
+a.delete {
+    background: url(../img/sprite.png)  10px -61px no-repeat #f3f3f3;
+    padding-left: 30px;
+}
+a.flag {
+    background: url(../img/sprite.png)  10px -96px no-repeat #f3f3f3;
+    padding-left: 30px;
+}
+a.up {
+    background: url(../img/sprite.png)  13px -133px no-repeat #f3f3f3;
+    width: 18px;
+}
+a.down {
+    background: url(../img/sprite.png)  13px -168px no-repeat #f3f3f3;
+    width: 18px;
+}
+a.save-big {
+    background: url(../img/sprite.png) 15px 11px no-repeat #f3f3f3;
+    font-size: 16px;
+    padding: 10px 15px 10px 35px;
+}
+a.add-big {
+    background: url(../img/sprite.png)  15px -23px no-repeat #f3f3f3;
+    font-size: 16px;
+    padding: 10px 15px 10px 35px;
+}
+a.delete-big {
+    background: url(../img/sprite.png)  15px -57px no-repeat #f3f3f3;
+    font-size: 16px;
+    padding: 10px 15px 10px 35px;
+}
+a.flag-big {
+    background: url(../img/sprite.png)  15px -92px no-repeat #f3f3f3;
+    font-size: 16px;
+    padding: 10px 15px 10px 35px;
+}
+a.up-big {
+    background: url(../img/sprite.png)  15px -128px no-repeat #f3f3f3;
+    width: 18px;
+    font-size: 16px;
+    padding: 10px 15px;
+}
+a.down-big {
+    background: url(../img/sprite.png)  15px -163px no-repeat #f3f3f3;
+    width: 18px;
+    font-size: 16px;
+    padding: 10px 15px;
+}
+
+
+
+/* ========================================================================    
+ *
+ * main.css
+ * ------------
+ *
+ * Main CSS style file, applied to all pages
+ *
+ * ======================================================================== */
+    /* ===================================================================== 
+     * Canvas
+     * ===================================================================== */
+    #canvas_wrapper {
+        float:left;
+        height:100%;
+        margin:0 2% 0 0;
+        position:relative;
+        width:600px;
+    }
+        #canvas {
+            background:#ffffff url(../image/grass_bg.png);
+            border: 1px solid #cdcdcd;
+            position:relative;
+        }
+
+    /* ===================================================================== 
+     * Entity Actions, List, and Actions - Shared properties
+     * ===================================================================== */
+    #entity_action_wrapper, 
+    #entities_list_wrapper, 
+    #engine_action_wrapper {
+        float:left;
+        font-size:.9em;
+        height:100%;
+        margin:0 1% 0 0;
+        overflow-x: hidden;
+        position:relative;
+        width:15%;
+    }
+    #entity_action_wrapper h2, 
+    #entities_list_wrapper h2, 
+    #engine_action_wrapper h2 {
+        border-bottom:1px solid #cdcdcd;
+        font-size:1.5em;
+        letter-spacing: .1em;
+        margin: 0 0 .5em 0;
+        padding:0 0 2px; 0;
+    }
+    /* ===================================================================== 
+     * Entity Actions
+     * ===================================================================== */
+    #selected_entity_wrapper {
+        font-size:.9em;
+        margin:0 0 10px 0;
+        position:relative;
+    }
+        #selected_entity,
+        #selected_entity_target_wrapper,
+        #entities_list_ul li{
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            -icab-text-overflow: ellipsis;
+            -khtml-text-overflow: ellipsis;
+            -moz-text-overflow: ellipsis;
+            -webkit-text-overflow: ellipsis;
+            position:relative;
+            overflow:hidden;
+            white-space:nowrap;
+        }
+        #selected_entity {
+            background:rgba(255,255,255,.5);
+            border:1px solid rgba(200,200,200,.5);
+            border-radius:4px;
+            font-weight:bold;
+            margin:0 0 5px 0;
+            padding:1px;
+        }
+        #selected_entity_target_wrapper {
+            font-size:.9em;
+        }
+            #target_entity_id {
+                color: #505050;
+            }
+                #selected_entity_target_wrapper .no_target {
+                    color: #ababab !important;
+                }
+
+    /* ===================================================================== 
+     * Entities List
+     * ===================================================================== */
+    #entities_list_wrapper {
+    }
+        #entities_list {
+            font-size:.8em;
+            height:90%;
+            overflow:auto;
+        }
+        #entities_list_ul {
+            margin:0;
+            padding:0;
+        }
+            #entities_list_ul li {
+                cursor: pointer;
+            }
+    
+    /* ===================================================================== 
+     * Engine Actions
+     * ===================================================================== */
+    #engine_action_wrapper {
+        margin:0;
+    }
+
+
+/* ========================================================================    
+ * Engine Log
+ * ======================================================================== */
+#engine_log_wrapper {
+    border:1px solid #111111;
+    height:125px;
+    font-size:.9em;
+    padding:1px;
+    position:relative;
+}
+#engine_log {
+    background:#383838;
+    color:#ffffff;
+    height:100%;
+    font-family: 'Inconsolata', sans-serif;
+    overflow:auto;
+    position:relative;
+    text-shadow:none;
+    z-index:50;
+}
+    #engine_log ul li {
+        padding:0;
+        margin:0;
+    }
+    #engine_log .error {
+        color:#C64444;
+    }
+    #engine_log .success {
+        color:#4DC644;
+    }
+    #engine_log .waiting{
+        color:#ababab;
+    }
+
+/*Engine log buttons*/
+#engine_log_buttons {
+    position:absolute;
+    right:10px;
+    top:0;
+    z-index:100;
+}
+
+/* ===================================================================== 
+ * Entity Info
+ * ===================================================================== */
+/* The entity info wrapper appears above everything */
+#entity_information_wrapper {
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -moz-box-shadow: 0 0 25px #343434;
+    -webkit-box-shadow:0 0 25px #343434;
+    box-shadow: 0 0 25px #343434;
+
+    background: #f0f0f0;
+    border: solid 1px #808080;
+    bottom:10%;
+    display: none;
+    left:10%;
+    padding:0;
+    position: absolute;
+    right:10%;
+    top:50px;
+    z-index:9999;
+}
+    #entity_information_header {
+        background: -webkit-gradient(linear,0% 0%,0% 100%,from(#e3e3e3),to(#b5b5b5));
+        background: -moz-linear-gradient(linear,0% 0%,0% 100%,from(#e3e3e3),to(#b5b5b5));
+        background: -webkit-linear-gradient(top, #e3e3e3, #b5b5b5);
+        border-bottom:1px solid #707070;
+        border-top:1px solid #f0f0f0;
+        padding:5px 20px;
+        position:relative;
+        text-shadow: 0 0 1px #f0f0f0 !important;
+    }
+        #entity_information_header h2 {
+            color: #404040 !important;
+        }
+        #entity_information_close_wrapper {
+            position:absolute;
+            right:0;
+            top:-1px;
+        }
+            #entity_information_close {
+                -moz-box-shadow: 0 0 25px #343434;
+                -webkit-box-shadow:0 0 25px #343434;
+                box-shadow: 0 0 25px #343434;
+            }
+    /* ===================================================================== 
+     * D3 Graph styles
+     * ===================================================================== */
+    /* Network graph d3 container */
+    #entity_information_network_container {
+        border:1px solid #707070;
+        display:block;
+        font: 10px Verdana;
+        height:500px;
+        width:500px;
+    }
+        #entity_information_network_container path.link {
+          fill: none;
+          stroke: #666;
+          stroke-width: 1.5px;
+        }
+
+        #entity_information_network_container marker#positive {
+          fill: green;
+        }
+
+        #entity_information_network_container path.link.positive {
+          stroke: green;
+        }
+        #entity_information_network_container path.link.negative{
+          stroke: red;
+        }
+
+        #entity_information_network_container path.link.neutral {
+          stroke-dasharray: 0,2 1;
+        }
+
+        #entity_information_network_container circle {
+          fill: #ccc;
+          stroke: #333;
+          stroke-width: 1.5px;
+        }
