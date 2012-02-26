@@ -13,6 +13,7 @@
 //============================================================================
 VASIR_ENGINE.WEB_SOCKET = {
     _socket: undefined,
+    _port: '1337',
     functions: {
         'init': undefined,
         'heart_beat': undefined
@@ -37,7 +38,7 @@ VASIR_ENGINE.WEB_SOCKET.functions.init = function(){
 VASIR_ENGINE.WEB_SOCKET.functions.game_state_heart_beat = function(){
     //Setup the socket object
     VASIR_ENGINE.WEB_SOCKET._socket = io.connect('http://' + 
-        VASIR_ENGINE._HOST_NAME + ':1337');
+        VASIR_ENGINE._HOST_NAME + ':' + VASIR_ENGINE.WEB_SOCKET._port);
     socket = VASIR_ENGINE.WEB_SOCKET._socket;
 
     socket.on('connect', function (res) {
