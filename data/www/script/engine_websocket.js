@@ -46,7 +46,7 @@ VASIR_ENGINE.WEB_SOCKET.functions.game_state_heart_beat = function(){
             'message': 'WebSocket connected successfully',
             'style': 'success'});
     });
-    socket.on('message', function (res) {
+    socket.on('game_state:update', function (res) {
         //Check the response against the previous data.  If it is the same,
         //  we don't need to actually do anything
         if(VASIR_ENGINE.WEB_SOCKET.previous_data === res){
