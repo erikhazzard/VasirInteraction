@@ -42,6 +42,7 @@
 
 @engine_log_height: 80px;
 
+@entity_information_header_height: 30px;
 /* ========================================================================    
  *
  * Base Styles 
@@ -698,6 +699,7 @@ z-index:9999;
     background: -webkit-linear-gradient(top, #e3e3e3, #b5b5b5);
     border-bottom:1px solid #707070;
     border-top:1px solid #f0f0f0;
+    height: @entity_information_header_height;
     padding:5px 20px;
     position:relative;
     text-shadow: 0 0 1px #f0f0f0 !important;
@@ -707,24 +709,39 @@ z-index:9999;
     }
     #entity_information_close_wrapper {
         position:absolute;
-        right:0;
+        bottom:5px;
+        right:10px;
         top:-1px;
+        width:auto;
     }
         #entity_information_close {
             -moz-box-shadow: 0 0 25px #343434;
             -webkit-box-shadow:0 0 25px #343434;
             box-shadow: 0 0 25px #343434;
+            font-size:.9em;
+            padding:5px 15px !important;
         }
+
+#entity_information {
+    bottom:0;
+    left:0;
+    position:absolute;
+    right:0;
+    top: @entity_information_header_height + 5px;
+}
 /* ===================================================================== 
  * D3 Graph styles
  * ===================================================================== */
 /* Network graph d3 container */
 #entity_information_network_container {
     border:1px solid #707070;
+    bottom: 10px;
     display:block;
     font: 10px Verdana;
-    height:500px;
-    width:500px;
+    left:10px;
+    position:absolute;
+    width:40%;
+    top:10px;
 }
     #entity_information_network_container path.link {
       fill: none;
