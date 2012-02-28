@@ -116,6 +116,9 @@ VASIR_ENGINE.D3.functions.setup_network_graph = function(params){
         .on("tick", tick)
         .start();
 
+    //Remove existing svg
+    $('#' + svg_id).empty();
+
     //Create the SVG element
     var svg = d3.select('#' + svg_id).append("svg:svg")
         .attr("width", svg_w)
