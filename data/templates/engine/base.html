@@ -140,7 +140,7 @@
         ================================= -->
     <div id='entity_information_wrapper'>
         <div id='entity_information_header'>
-            <h2> Entity Information </h2>
+            <h2 id='entity_information_entity_name'></h2>
             <div id='entity_information_close_wrapper' class='buttons'>
                 <a id='entity_information_close'
                     href='#' class='button big'>Hide</a>
@@ -149,8 +149,21 @@
         <div id='entity_information'>
             <!-- Entity Info goes here -->
             <div id='entity_side_info'></div>
-            <div id='entity_information_network_container'>
-                <!-- Network chart will go here -->
+
+            <!-- Network graph of entity's network -->
+            <div id='entity_information_network_wrapper'>
+                Network
+                <div id='entity_information_network_container'>
+                    <!-- Network chart will go here -->
+                </div>
+            </div>
+
+            <!-- Radar chart of entity's stats -->
+            <div id='entity_information_stats_wrapper'>
+                Stats
+                <div id='entity_information_stats_container'>
+                    <!-- Network chart will go here -->
+                </div>
             </div>
         </div>
     </div>

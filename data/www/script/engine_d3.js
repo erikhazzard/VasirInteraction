@@ -21,6 +21,8 @@ VASIR_ENGINE.D3 = {
 //
 //============================================================================
 //---------------------------------------
+//NETWORK GRAPH 
+//
 //setup_network_graph(PARAMS({ entity, svg_id })):
 //-------------
 //Creates a graph visualizing the passed in entity's network attribute.
@@ -196,3 +198,45 @@ VASIR_ENGINE.D3.functions.setup_network_graph = function(params){
       });
     }
 }
+
+//---------------------------------------
+//RADAR CHART OF ENTITY STATS
+//
+//setup_entity_radar_chart(PARAMS({ entity, svg_id })):
+//-------------
+//Creates a graph visualizing the passed in entity's attributes.
+//  Creates a radar chart with the passed in svg_id 
+//---------------------------------------
+VASIR_ENGINE.D3.functions.setup_entity_radar_chart= function(params){
+    var entity = undefined; 
+    var svg_id = 'entity_information_radar_container';
+
+    //Check for params
+    if( typeof params === 'object' ){
+        if( params.entity !== undefined){
+            //They may pass in either a string ID or an entity object
+            if( typeof params.entity === 'object' ){
+                entity = params.entity;
+            }else if( typeof params.entity === 'string'){
+                entity = VASIR_ENGINE.entities[params.entity];
+            }
+        }else{
+            //Assume an entity object was passed in
+            entity = params
+        }
+        if( params.svg_id !== undefined){
+            svg_id = params.svg_id;
+        }
+    }else if(typeof params === 'string'){
+        //Assume an entity ID was passed in
+        entity = VASIR_ENGINE.entities[params];
+    }
+
+    //If the entity wasn't set successfully, log a message and return false
+    if(entity === undefined){
+        VASIR_ENGINE.functions.update_log({
+            'message': 'Invalid entity passed in to create graph',
+            'style': 'error'
+        });
+        return false;
+    }

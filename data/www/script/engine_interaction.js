@@ -341,7 +341,10 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
                 $('#entity_information_wrapper').css(
                     'display', 'block');
 
-                //Fill it with data
+                //Set entity name
+                $('#entity_information_entity_name').html(
+                    VASIR_ENGINE.entities[res.id].name);
+
                 
                 //Setup the D3 network graph 
                 VASIR_ENGINE.D3.functions.setup_network_graph({
