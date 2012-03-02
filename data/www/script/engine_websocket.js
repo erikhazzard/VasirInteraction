@@ -56,9 +56,9 @@ VASIR_ENGINE.WEB_SOCKET.functions.game_state_heart_beat = function(){
             //Game state has changed somehow, so update the client's
             //  game state
             VASIR_ENGINE.functions.update_game_state(res);
+            //Set the previous data to this current data
+            VASIR_ENGINE.WEB_SOCKET.previous_data = res;
+            console.log('called!');
         }
-        //Set the previous data to this current data
-        VASIR_ENGINE.WEB_SOCKET.previous_data = res;
-
     });
 }

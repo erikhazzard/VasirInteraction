@@ -240,3 +240,5 @@ VASIR_ENGINE.D3.functions.setup_entity_radar_chart= function(params){
         });
         return false;
     }
+
+};

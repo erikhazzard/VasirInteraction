@@ -216,6 +216,7 @@ VASIR_ENGINE.functions.update_game_state = function(params){
         //Add the entity info
         VASIR_ENGINE.entities[res[i].id] = res[i];
 
+        /* TODO: FIX THIS SO IT DOESNT KEEP CALLING ITSELF
         var list_element = $('<li/>', {
             'id': 'entity_' + res[i].id,
         });
@@ -246,6 +247,8 @@ VASIR_ENGINE.functions.update_game_state = function(params){
 
         //Add links to the entities list element
         $('#entities_list_ul').append(list_element);
+
+        */
 
     }
     //Update the entities list header
