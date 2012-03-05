@@ -49,7 +49,12 @@ VASIR_ENGINE.WEB_SOCKET.functions.game_state_heart_beat = function(){
     socket.on('game_state:update', function (res) {
         //Check the response against the previous data.  If it is the same,
         //  we don't need to actually do anything
-        if(VASIR_ENGINE.WEB_SOCKET.previous_data === res){
+        //Evalute the response so we can do checks against previous
+        //  data easier
+        res
+        res_object = eval(res);
+
+        if(VASIR_ENGINE.WEB_SOCKET.previous_data === res_object){
             //Previous and current data is same, so do nothing
         }
         else{
@@ -57,8 +62,7 @@ VASIR_ENGINE.WEB_SOCKET.functions.game_state_heart_beat = function(){
             //  game state
             VASIR_ENGINE.functions.update_game_state(res);
             //Set the previous data to this current data
-            VASIR_ENGINE.WEB_SOCKET.previous_data = res;
-            console.log('called!');
+            VASIR_ENGINE.WEB_SOCKET.previous_data = res_object;
         }
     });
 }

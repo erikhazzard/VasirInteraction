@@ -19,6 +19,8 @@
 
 /* Fonts */
 @normal_font: 'Cantarell', Arial, Verdana, sans-serif;
+@header_font : 'Architects Daughter', Arial, Verdana, sans-serif;
+
 .normal_button_background(){
     background: #dedede;
     background: -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#d1d1d1));
@@ -82,7 +84,7 @@ a:hover {
  * Headers 
  * -------------------------------------- */
 h1,h2,h3,h4,h5,h6, #header{
-    font-family:'Architects Daughter', Arial, Verdana, sans-serif; 
+    font-family: @header_font;
     margin:0;
     padding:0;
 }
@@ -219,8 +221,345 @@ input:focus, textarea:focus {
         top: @content_top_padding;
     }
 
+/* ===================================================================== 
+ * Canvas
+ * ===================================================================== */
+#canvas_wrapper {
+    float:left;
+    height:100%;
+    margin:0 2% 0 0;
+    position:relative;
+    width:600px;
+}
+    #canvas {
+        background:#ffffff url(../image/grass_bg.png);
+        border: 1px solid #cdcdcd;
+        position:relative;
+    }
+
+/* ===================================================================== 
+ * Entity Actions, List, and Actions - Shared properties
+ * ===================================================================== */
+#entity_action_wrapper, 
+#entities_list_wrapper, 
+#engine_action_wrapper {
+    float:left;
+    font-size:.9em;
+    height:100%;
+    margin:0 1% 0 0;
+    overflow-x: hidden;
+    position:relative;
+    width:15%;
+}
+#entity_action_wrapper h2, 
+#entities_list_wrapper h2, 
+#engine_action_wrapper h2 {
+    border-bottom:1px solid #cdcdcd;
+    font-size:1.5em;
+    letter-spacing: .1em;
+    margin: 0 0 .5em 0;
+    padding:0 0 2px 0;
+}
+/* ===================================================================== 
+ * Entity Actions
+ * ===================================================================== */
+#selected_entity_wrapper {
+    font-size:.9em;
+    margin:0 0 10px 0;
+    position:relative;
+}
+    #selected_entity,
+    #selected_entity_target_wrapper,
+    #entities_list_ul li{
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        -icab-text-overflow: ellipsis;
+        -khtml-text-overflow: ellipsis;
+        -moz-text-overflow: ellipsis;
+        -webkit-text-overflow: ellipsis;
+        position:relative;
+        overflow:hidden;
+        white-space:nowrap;
+    }
+    #selected_entity {
+        background:rgba(255,255,255,.5);
+        border:1px solid rgba(200,200,200,.5);
+        border-radius:4px;
+        font-weight:bold;
+        margin:0 0 5px 0;
+        padding:1px;
+    }
+    #selected_entity_target_wrapper {
+        font-size:.9em;
+    }
+        #target_entity_id {
+            color: #505050;
+        }
+            #selected_entity_target_wrapper .no_target {
+                color: #ababab !important;
+            }
+
+/* ===================================================================== 
+ * Entities List
+ * ===================================================================== */
+#entities_list_wrapper {
+}
+    #entities_list {
+        font-size:.8em;
+        height:90%;
+        overflow:auto;
+    }
+    #entities_list_ul {
+        margin:0;
+        padding:0;
+    }
+        #entities_list_ul li {
+            cursor: pointer;
+        }
+
+/* ===================================================================== 
+ * Engine Actions
+ * ===================================================================== */
+#engine_action_wrapper {
+    margin:0;
+}
+
+
 /* ========================================================================    
+* Engine Log
+* ======================================================================== */
+#engine_log_wrapper {
+    background:#383838;
+    border:1px solid #000000;
+    bottom:0;
+    font-size:.8em;
+    height:@engine_log_height;
+    left:0;
+    position:absolute;
+    right:0;
+}
+#engine_log {
+    border: 1px solid #707070;
+    color:#ffffff;
+    height:90%;
+    overflow:auto;
+    position:relative;
+    text-shadow:0 0 1px #000000;
+    z-index:50;
+}
+#engine_log ul, #engine_log ul li {
+    padding:0;
+    margin:0;
+}
+#engine_log ul li {
+    margin: 0 0 0 25px;
+}
+#engine_log .error {
+    color:#C64444;
+    text-shadow: 0 0 1px #000000, 0 0 8px #ff0000 !important;
+}
+#engine_log .success {
+    color:#4DC644;
+    text-shadow: 0 0 1px #000000, 0 0 8px #00ff00 !important;
+}
+#engine_log .waiting{
+    color:#ababab;
+    text-shadow: 0 0 1px #000000, 0 0 8px #808080 !important;
+}
+#engine_log .warning{
+    color:#dddd00;
+    text-shadow: 0 0 1px #000000, 0 0 8px #ffff00 !important;
+}
+
+/*Engine log buttons*/
+#engine_log_buttons {
+    font-size:.9em;
+    position:absolute;
+    right:30px;
+    top:0;
+    z-index:100;
+}
+
+/* ===================================================================== 
+* Entity Info
+* ===================================================================== */
+/* The entity info wrapper appears above everything */
+#entity_information_wrapper {
+border-radius: 5px;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-moz-box-shadow: 0 0 25px #343434;
+-webkit-box-shadow:0 0 25px #343434;
+box-shadow: 0 0 25px #343434;
+
+background: #f0f0f0;
+border: solid 1px #808080;
+bottom:10%;
+display: none;
+left:10%;
+padding:0;
+position: absolute;
+right:10%;
+top:50px;
+z-index:9999;
+}
+#entity_information_header {
+    background: -webkit-gradient(linear,0% 0%,0% 100%,from(#e3e3e3),to(#b5b5b5));
+    background: -moz-linear-gradient(linear,0% 0%,0% 100%,from(#e3e3e3),to(#b5b5b5));
+    background: -webkit-linear-gradient(top, #e3e3e3, #b5b5b5);
+    border-bottom:1px solid #707070;
+    border-top:1px solid #f0f0f0;
+    height: @entity_information_header_height;
+    padding:5px 20px;
+    position:relative;
+    text-shadow: 0 0 1px #f0f0f0 !important;
+}
+    #entity_information_header h2 {
+        color: #404040 !important;
+    }
+    #entity_information_close_wrapper {
+        position:absolute;
+        bottom:5px;
+        right:10px;
+        top:-1px;
+        width:auto;
+    }
+        #entity_information_close {
+            -moz-box-shadow: 0 0 25px #343434;
+            -webkit-box-shadow:0 0 25px #343434;
+            box-shadow: 0 0 25px #343434;
+            font-size:.9em;
+            padding:5px 15px !important;
+        }
+
+#entity_information {
+    bottom:0;
+    left:0;
+    position:absolute;
+    right:0;
+    top: @entity_information_header_height + 5px;
+}
+/* ===================================================================== 
+ * D3 Graph styles
+ * ===================================================================== */
+/* Network graph d3 container */
+#entity_information_network_wrapper {
+    bottom:10px;
+    left:10px;
+    position:absolute;
+    right:50%;
+    top:10px;
+}
+#entity_information_network_container {
+    border:1px solid #707070;
+    bottom: 10px;
+    display:block;
+    font: 10px Verdana;
+    left:10px;
+    position:absolute;
+    right:10px;
+    top:10px;
+}
+    #entity_information_network_container path.link {
+      fill: none;
+      stroke: #666;
+      stroke-width: 1.5px;
+    }
+
+    #entity_information_network_container marker#positive {
+      fill: green;
+    }
+
+    #entity_information_network_container path.link.positive {
+      stroke: green;
+    }
+    #entity_information_network_container path.link.negative{
+      stroke: red;
+    }
+
+    #entity_information_network_container path.link.neutral {
+      stroke-dasharray: 0,2 1;
+    }
+
+    #entity_information_network_container circle {
+      fill: #ccc;
+      stroke: #333;
+      stroke-width: 1.5px;
+    }
+
+/* ========================================================================    
+ * Entity Stats
+ * ======================================================================== */
+#entity_information_stats_wrapper { 
+    bottom:10px;
+    left:52%;
+    position:absolute;
+    top:10px;
+    right: 10px;
+}
+    #entity_information_stats_container {
+        border: 1px solid #707070;
+        bottom:10px;
+        left:10px;
+        position:absolute;
+        top:10px;
+        right: 10px;
+    }
+
+rect {
+  fill: none;
+  stroke: @color_black;
+}
+
+text {
+  font-size: 10px;
+}
+
+path {
+}
+
+/* Axis stuff*/
+.axes_line {
+    stroke: rgba(60,61,67,.2);
+    stroke-width:2px;
+}
+    .axis_text {
+        font-size:1.2em;
+        text-shadow:0 0 1px #ffffff;
+    }
+
+/* Radar chart polygon stuff */
+circle {
+    fill: rgba(60,90,120,1);
+    stroke: rgba(60,90,120,1);
+    stroke-width: 2px;
+}
+.radar_circle_group circle{
+    fill: none;
+    stroke: none;
+}
+.axes_center_mark {
+    fill: rgba(70,70,70,.8);
+    stroke: rgba(40,40,40,.8);
+    stroke-width:3px;
+}
+#negative_value_polygon {
+    fill: rgba(255,0,0,1);
+    stroke: #000000;
+    stroke-width: 2px;
+    opacity:.7;
+}
+.radar_polygon {
+    fill: rgba(40,70,100,1);
+    stroke: rgba(10,40,70,1);
+    stroke-linejoin: round;
+    stroke-width: 4px;
+}
+
+/* ========================================================================    
+ * 
  * Footer
+ *
  * ======================================================================== */
 #footer_wrapper {
     -moz-box-shadow: 0 -2px 7px #707070;
@@ -500,272 +839,3 @@ a.down-big {
     font-size: 16px;
     padding: 10px 15px;
 }
-
-
-
-/* ========================================================================    
- *
- * main.css
- * ------------
- *
- * Main CSS style file, applied to all pages
- *
- * ======================================================================== */
-/* ===================================================================== 
- * Canvas
- * ===================================================================== */
-#canvas_wrapper {
-    float:left;
-    height:100%;
-    margin:0 2% 0 0;
-    position:relative;
-    width:600px;
-}
-    #canvas {
-        background:#ffffff url(../image/grass_bg.png);
-        border: 1px solid #cdcdcd;
-        position:relative;
-    }
-
-/* ===================================================================== 
- * Entity Actions, List, and Actions - Shared properties
- * ===================================================================== */
-#entity_action_wrapper, 
-#entities_list_wrapper, 
-#engine_action_wrapper {
-    float:left;
-    font-size:.9em;
-    height:100%;
-    margin:0 1% 0 0;
-    overflow-x: hidden;
-    position:relative;
-    width:15%;
-}
-#entity_action_wrapper h2, 
-#entities_list_wrapper h2, 
-#engine_action_wrapper h2 {
-    border-bottom:1px solid #cdcdcd;
-    font-size:1.5em;
-    letter-spacing: .1em;
-    margin: 0 0 .5em 0;
-    padding:0 0 2px 0;
-}
-/* ===================================================================== 
- * Entity Actions
- * ===================================================================== */
-#selected_entity_wrapper {
-    font-size:.9em;
-    margin:0 0 10px 0;
-    position:relative;
-}
-    #selected_entity,
-    #selected_entity_target_wrapper,
-    #entities_list_ul li{
-        text-overflow: ellipsis;
-        -o-text-overflow: ellipsis;
-        -icab-text-overflow: ellipsis;
-        -khtml-text-overflow: ellipsis;
-        -moz-text-overflow: ellipsis;
-        -webkit-text-overflow: ellipsis;
-        position:relative;
-        overflow:hidden;
-        white-space:nowrap;
-    }
-    #selected_entity {
-        background:rgba(255,255,255,.5);
-        border:1px solid rgba(200,200,200,.5);
-        border-radius:4px;
-        font-weight:bold;
-        margin:0 0 5px 0;
-        padding:1px;
-    }
-    #selected_entity_target_wrapper {
-        font-size:.9em;
-    }
-        #target_entity_id {
-            color: #505050;
-        }
-            #selected_entity_target_wrapper .no_target {
-                color: #ababab !important;
-            }
-
-/* ===================================================================== 
- * Entities List
- * ===================================================================== */
-#entities_list_wrapper {
-}
-    #entities_list {
-        font-size:.8em;
-        height:90%;
-        overflow:auto;
-    }
-    #entities_list_ul {
-        margin:0;
-        padding:0;
-    }
-        #entities_list_ul li {
-            cursor: pointer;
-        }
-
-/* ===================================================================== 
- * Engine Actions
- * ===================================================================== */
-#engine_action_wrapper {
-    margin:0;
-}
-
-
-/* ========================================================================    
-* Engine Log
-* ======================================================================== */
-#engine_log_wrapper {
-    background:#383838;
-    border:1px solid #000000;
-    bottom:0;
-    font-size:.8em;
-    height:@engine_log_height;
-    left:0;
-    position:absolute;
-    right:0;
-}
-#engine_log {
-    border: 1px solid #707070;
-    color:#ffffff;
-    height:90%;
-    overflow:auto;
-    position:relative;
-    text-shadow:0 0 1px #000000;
-    z-index:50;
-}
-#engine_log ul, #engine_log ul li {
-    padding:0;
-    margin:0;
-}
-#engine_log ul li {
-    margin: 0 0 0 25px;
-}
-#engine_log .error {
-    color:#C64444;
-    text-shadow: 0 0 1px #000000, 0 0 8px #ff0000 !important;
-}
-#engine_log .success {
-    color:#4DC644;
-    text-shadow: 0 0 1px #000000, 0 0 8px #00ff00 !important;
-}
-#engine_log .waiting{
-    color:#ababab;
-    text-shadow: 0 0 1px #000000, 0 0 8px #808080 !important;
-}
-#engine_log .warning{
-    color:#dddd00;
-    text-shadow: 0 0 1px #000000, 0 0 8px #ffff00 !important;
-}
-
-/*Engine log buttons*/
-#engine_log_buttons {
-    font-size:.9em;
-    position:absolute;
-    right:30px;
-    top:0;
-    z-index:100;
-}
-
-/* ===================================================================== 
-* Entity Info
-* ===================================================================== */
-/* The entity info wrapper appears above everything */
-#entity_information_wrapper {
-border-radius: 5px;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
--moz-box-shadow: 0 0 25px #343434;
--webkit-box-shadow:0 0 25px #343434;
-box-shadow: 0 0 25px #343434;
-
-background: #f0f0f0;
-border: solid 1px #808080;
-bottom:10%;
-display: none;
-left:10%;
-padding:0;
-position: absolute;
-right:10%;
-top:50px;
-z-index:9999;
-}
-#entity_information_header {
-    background: -webkit-gradient(linear,0% 0%,0% 100%,from(#e3e3e3),to(#b5b5b5));
-    background: -moz-linear-gradient(linear,0% 0%,0% 100%,from(#e3e3e3),to(#b5b5b5));
-    background: -webkit-linear-gradient(top, #e3e3e3, #b5b5b5);
-    border-bottom:1px solid #707070;
-    border-top:1px solid #f0f0f0;
-    height: @entity_information_header_height;
-    padding:5px 20px;
-    position:relative;
-    text-shadow: 0 0 1px #f0f0f0 !important;
-}
-    #entity_information_header h2 {
-        color: #404040 !important;
-    }
-    #entity_information_close_wrapper {
-        position:absolute;
-        bottom:5px;
-        right:10px;
-        top:-1px;
-        width:auto;
-    }
-        #entity_information_close {
-            -moz-box-shadow: 0 0 25px #343434;
-            -webkit-box-shadow:0 0 25px #343434;
-            box-shadow: 0 0 25px #343434;
-            font-size:.9em;
-            padding:5px 15px !important;
-        }
-
-#entity_information {
-    bottom:0;
-    left:0;
-    position:absolute;
-    right:0;
-    top: @entity_information_header_height + 5px;
-}
-/* ===================================================================== 
- * D3 Graph styles
- * ===================================================================== */
-/* Network graph d3 container */
-#entity_information_network_container {
-    border:1px solid #707070;
-    bottom: 10px;
-    display:block;
-    font: 10px Verdana;
-    left:10px;
-    position:absolute;
-    width:40%;
-    top:10px;
-}
-    #entity_information_network_container path.link {
-      fill: none;
-      stroke: #666;
-      stroke-width: 1.5px;
-    }
-
-    #entity_information_network_container marker#positive {
-      fill: green;
-    }
-
-    #entity_information_network_container path.link.positive {
-      stroke: green;
-    }
-    #entity_information_network_container path.link.negative{
-      stroke: red;
-    }
-
-    #entity_information_network_container path.link.neutral {
-      stroke-dasharray: 0,2 1;
-    }
-
-    #entity_information_network_container circle {
-      fill: #ccc;
-      stroke: #333;
-      stroke-width: 1.5px;
-    }

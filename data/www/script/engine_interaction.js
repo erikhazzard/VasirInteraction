@@ -198,62 +198,75 @@ VASIR_ENGINE.functions.update_game_state = function(params){
     }
 
     //decode the JSON response
-    res = eval(game_state);
+    game_state = eval(game_state);
+    game_state = game_state.game_state;
+    
+    if(game_state === undefined){
+        return false;
+    }
 
     //Update the engine log
     if(suppress_log === false){
         VASIR_ENGINE.functions.update_log({
-            'message': res.length + ' Entities Retrieved!',
+            'message': game_state.entities.length + ' Entities Retrieved!',
             'style': 'success'});
     }
         
-    //Clear out the existing elements
-    $('#entities_list_ul').empty();
 
     //Loop through the returned entities and update the 
     //  VASIR_ENGINE.entities object
-    for(var i=res.length-1; i>=0; i--){
+    for(var i=game_state.entities.length-1; i>=0; i--){
         //Add the entity info
-        VASIR_ENGINE.entities[res[i].id] = res[i];
-
-        /* TODO: FIX THIS SO IT DOESNT KEEP CALLING ITSELF
-        var list_element = $('<li/>', {
-            'id': 'entity_' + res[i].id,
-        });
-
-        //Link (button)
-        list_element.append( $('<a/>', {
-            'href': '#',
-            'text': res[i].id,
-            'class':'button',
-            'click': function(index, entity_id){
-                return function(){
-                    //We need to use a closure here to maintain
-                    //  state of the loop variable
-                    //Perform an action based on the selection mode
-                    if(VASIR_ENGINE.selection_mode === null){
-                        //select the entity they click on
-                        VASIR_ENGINE.functions.set_selected_entity(
-                            {'entity_id':entity_id});
-                    }else if(VASIR_ENGINE.selection_mode ===
-                        'entity_target'){
-
-                        VASIR_ENGINE.functions.set_entity_target({
-                            'target_entity_id': entity_id 
-                        });
-                    }
-                }}(i, res[i].id)
-        }));
-
-        //Add links to the entities list element
-        $('#entities_list_ul').append(list_element);
-
-        */
-
+        VASIR_ENGINE.entities[game_state.entities[i].id] = game_state.entities[i];
     }
+
+    //If this current list of entities does not match the previous game
+    //  state from the server, we need to generate a new list
+    if(VASIR_ENGINE.WEB_SOCKET.previous_data.game_state){
+        if(VASIR_ENGINE.entities.length 
+            !== VASIR_ENGINE.WEB_SOCKET.previous_data.game_state.entities.length){
+
+            //Clear out the existing elements
+            $('#entities_list_ul').empty();
+
+            for(var i=VASIR_ENGINE.entities.length-1; i>=0; i--){
+                var list_element = $('<li/>', {
+                    'id': 'entity_' + VASIR_ENGINE.entities[i].id,
+                });
+
+                //Link (button)
+                list_element.append( $('<a/>', {
+                    'href': '#',
+                    'text': VASIR_ENGINE.entities[i].id,
+                    'class':'button',
+                    'click': function(index, entity_id){
+                        return function(){
+                            //We need to use a closure here to maintain
+                            //  state of the loop variable
+                            //Perform an action based on the selection mode
+                            if(VASIR_ENGINE.selection_mode === null){
+                                //select the entity they click on
+                                VASIR_ENGINE.functions.set_selected_entity(
+                                    {'entity_id':entity_id});
+                            }else if(VASIR_ENGINE.selection_mode ===
+                                'entity_target'){
+
+                                VASIR_ENGINE.functions.set_entity_target({
+                                    'target_entity_id': entity_id 
+                                });
+                            }
+                        }}(i, VASIR_ENGINE.entities[i].id)
+                }));
+
+                //Add links to the entities list element
+                $('#entities_list_ul').append(list_element);
+            }
+        }
+    }
+
     //Update the entities list header
     $('#entities_list_header').innerHTML = 'All ' 
-        + res.length + ' Entities';
+        + VASIR_ENGINE.entities.length + ' Entities';
 }
 //============================================================================
 //ENTITY RELATED
@@ -352,6 +365,10 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
                 //Setup the D3 network graph 
                 VASIR_ENGINE.D3.functions.setup_network_graph({
                     entity: VASIR_ENGINE.entities[res.id]
+                });
+                VASIR_ENGINE.D3.functions.setup_radar({
+                    entity: VASIR_ENGINE.entities[res.id],
+                    element: '#entity_information_stats_container'
                 });
             }
 
