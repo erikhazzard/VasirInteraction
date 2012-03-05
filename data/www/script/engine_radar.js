@@ -8,29 +8,52 @@
  *
  * ======================================================================== */
 VASIR_ENGINE.D3.functions.setup_radar = function( params ){
-    var entity = params.entity;
-    var element = params.element;
-    var data = [];
+    //-----------------------------------
+    //Setup parameters
+    //-----------------------------------
+    if(typeof(params) === 'string'){
+        temp_params = {};
+        temp_params.entity = params;
+        //reset params
+        params = temp_params;
+    }
 
     //-----------------------------------
-    //Setup the data
-    var cur_children = [],
-        cur_child = {},
+    //Setup variables
+    //-----------------------------------
+    var entity = params.entity,
+        element = (params.element || '#entity_information_persona_container')
+        target_data = (params.data || entity.persona),
+        adjust_stats = (params.adjust_stats || false),
+
+        //Setup the data
         data = {'children': {}},
+        cur_children = [],
+        cur_child = {},
         total_values_combined = 0,
         highest_value = 0,
-        scaling_factor = undefined;
-    
+        scaling_factor = undefined,
+
+        //dom info
+        x=0, y=0, w=0, h=0, 
+        center=[];
+
+
     //---------------------------
     //Setup the _data object.  We'll determine percentages below
     //---------------------------
-    for(datum in entity.persona){
-        if(entity.persona.hasOwnProperty(datum)){
+    for(datum in target_data){
+        if(target_data.hasOwnProperty(datum)){
             //Setup temp data object
             data.children[datum] = {
-                value: entity.persona[datum] + 100,
                 percentage: 0
             };
+            if(adjust_stats === true){
+                data.children[datum].value = target_data[datum] + 100;
+            }else{
+                data.children[datum].value = target_data[datum];
+            }
+
             //Add to total values
             total_values_combined += data.children[datum].value;
             //Set highest value if necessary
@@ -68,11 +91,11 @@ VASIR_ENGINE.D3.functions.setup_radar = function( params ){
     $(element).empty();
 
     //Get width and height of the svg element
-    var h = $(element)[0].offsetHeight;
-    var w = $(element)[0].offsetWidth;
-    var x = undefined,
-        y = undefined;
-    var center = [
+    h = $(element)[0].offsetHeight;
+    w = $(element)[0].offsetWidth;
+    x = undefined;
+    y = undefined;
+    center = [
         w/2,
         h/2
     ];

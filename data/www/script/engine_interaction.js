@@ -366,9 +366,17 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
                 VASIR_ENGINE.D3.functions.setup_network_graph({
                     entity: VASIR_ENGINE.entities[res.id]
                 });
+                //Setup radar for persona
                 VASIR_ENGINE.D3.functions.setup_radar({
                     entity: VASIR_ENGINE.entities[res.id],
-                    element: '#entity_information_stats_container'
+                    element: '#entity_information_persona_container',
+                    data: VASIR_ENGINE.entities[res.id].persona
+                });
+                //Setup radar for stats
+                VASIR_ENGINE.D3.functions.setup_radar({
+                    entity: VASIR_ENGINE.entities[res.id],
+                    element: '#entity_information_stats_container',
+                    data: VASIR_ENGINE.entities[res.id].stats
                 });
             }
 
