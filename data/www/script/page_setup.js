@@ -33,12 +33,16 @@ $('document').ready(function(){
         VASIR_ENGINE.functions.set_selected_entity();
     });   
 
+    //Get entity info
     $('#get_entity_info').bind('click', function(e){
         //Fire off the add_entity action
         VASIR_ENGINE.functions.get_entity_information({
             show_info_window: true
         });
     });
+
+    //Also bind 'i' to get entity info
+
     $('#set_entity_target').bind('click', function(e){
         VASIR_ENGINE.functions.toggle_target_selection_mode();
     });
@@ -61,8 +65,7 @@ $('document').ready(function(){
     //
     //-----------------------------------
     $('#entity_information_close').bind('click', function(e){
-        e.preventDefault();
-        $('#entity_information_wrapper').css('display', 'none');
+        VASIR_ENGINE.functions.close_info_window(e);
     });
 
 

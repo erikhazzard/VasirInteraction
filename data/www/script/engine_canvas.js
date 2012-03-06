@@ -179,6 +179,9 @@ VASIR_ENGINE.canvas.functions.select_entity = function(params, event_type){
         var e = params;
     }
 
+    //Unregister event
+    $(document).off('keyup', VASIR_ENGINE.functions.keydown_show_info_window);
+
     //Get mouse position from passed in event
     var mouse_position = {x: e.offsetX, y: e.offsetY};
     var cur_entity, pos_x, pos_y = undefined;
@@ -225,6 +228,8 @@ VASIR_ENGINE.canvas.functions.select_entity = function(params, event_type){
                             });
                         }
                     }
+                    //Register handler to show entity info when pressing i
+                    $(document).on('keyup', VASIR_ENGINE.functions.keydown_show_info_window);
 
                     //Entity was found, return it
                     return cur_entity.id;

@@ -360,7 +360,6 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
                 //Set entity name
                 $('#entity_information_entity_name').html(
                     VASIR_ENGINE.entities[res.id].name);
-
                 
                 //Setup the D3 network graph 
                 VASIR_ENGINE.D3.functions.setup_network_graph({
@@ -368,9 +367,10 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
                 });
                 //Setup radar for persona
                 VASIR_ENGINE.D3.functions.setup_radar({
-                    entity: VASIR_ENGINE.entities[res.id],
+                    adjust_data: true,
+                    data: VASIR_ENGINE.entities[res.id].persona,
                     element: '#entity_information_persona_container',
-                    data: VASIR_ENGINE.entities[res.id].persona
+                    entity: VASIR_ENGINE.entities[res.id]
                 });
                 //Setup radar for stats
                 VASIR_ENGINE.D3.functions.setup_radar({
@@ -395,6 +395,16 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
                 'style': 'error'});
         }
     });
+}
+
+//When 'i' is pressed, show entity info
+VASIR_ENGINE.functions.keydown_show_info_window = function(event){
+    //If they press escape, close the window
+    if(event.keyCode === 73){
+        VASIR_ENGINE.functions.get_entity_information({
+            show_info_window: true
+        });
+    }
 }
 
 //---------------------------------------
@@ -675,6 +685,30 @@ VASIR_ENGINE.functions.set_selected_entity = function(params){
         VASIR_ENGINE.functions.update_log({
             'message': 'Removed entity from selection'});
         $('#entity_action_wrapper').css('opacity', 0);
+    }
+}
+
+//---------------------------------------
+//close_info_window(event)
+//-------------
+//Takes in a click event and closes the info window
+//---------------------------------------
+VASIR_ENGINE.functions.close_info_window = function(event){
+    event.preventDefault();
+    $('#entity_information_wrapper').css('display', 'none');
+    //Unregister the keypress handler
+    $(document).off('keyup', VASIR_ENGINE.functions.keydown_close_info_window);
+}
+
+//---------------------------------------
+//close_info_window(event)
+//-------------
+//Takes in a keypress event and closes the info window
+//---------------------------------------
+VASIR_ENGINE.functions.keydown_close_info_window = function(event){
+    //If they press escape, close the window
+    if(event.keyCode === 27){
+        VASIR_ENGINE.functions.close_info_window(event); 
     }
 }
 //============================================================================

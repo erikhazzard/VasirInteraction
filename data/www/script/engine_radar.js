@@ -24,7 +24,7 @@ VASIR_ENGINE.D3.functions.setup_radar = function( params ){
     var entity = params.entity,
         element = (params.element || '#entity_information_persona_container')
         target_data = (params.data || entity.persona),
-        adjust_stats = (params.adjust_stats || false),
+        adjust_data = (params.adjust_data || false),
 
         //Setup the data
         data = {'children': {}},
@@ -48,7 +48,7 @@ VASIR_ENGINE.D3.functions.setup_radar = function( params ){
             data.children[datum] = {
                 percentage: 0
             };
-            if(adjust_stats === true){
+            if(adjust_data === true){
                 data.children[datum].value = target_data[datum] + 100;
             }else{
                 data.children[datum].value = target_data[datum];
