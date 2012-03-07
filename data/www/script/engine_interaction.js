@@ -353,6 +353,9 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
 
             //Show info window if caller asked for it
             if(show_info_window === true){
+                //Allow user to close window when pressing esc
+                $(document).on('keyup', 
+                    VASIR_ENGINE.functions.keydown_close_info_window);
                 //Show the window
                 $('#entity_information_wrapper').css(
                     'display', 'block');
