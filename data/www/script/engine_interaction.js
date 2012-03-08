@@ -373,13 +373,15 @@ VASIR_ENGINE.functions.get_entity_information = function(params){
                     adjust_data: true,
                     data: VASIR_ENGINE.entities[res.id].persona,
                     element: '#entity_information_persona_container',
-                    entity: VASIR_ENGINE.entities[res.id]
+                    entity: VASIR_ENGINE.entities[res.id],
+                    show_inner_circle: true
                 });
                 //Setup radar for stats
                 VASIR_ENGINE.D3.functions.setup_radar({
                     entity: VASIR_ENGINE.entities[res.id],
                     element: '#entity_information_stats_container',
-                    data: VASIR_ENGINE.entities[res.id].stats
+                    data: VASIR_ENGINE.entities[res.id].stats,
+                    show_inner_circle: false
                 });
             }
 
@@ -682,6 +684,9 @@ VASIR_ENGINE.functions.set_selected_entity = function(params){
         
         //Get the current entity info
         VASIR_ENGINE.functions.get_entity_information();
+
+        //Update the localStorage
+        //VASIR_ENGINE.local_storage.set('app:selected_entity', target.toJSON());
 
     }else if(target === undefined){
         //Update the log

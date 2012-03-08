@@ -23,6 +23,7 @@ VASIR_ENGINE.D3.functions.setup_radar = function( params ){
     //-----------------------------------
     var entity = params.entity,
         element = (params.element || '#entity_information_persona_container')
+        show_inner_circle = (params.show_inner_circle || false),
         target_data = (params.data || entity.persona),
         adjust_data = (params.adjust_data || false),
 
@@ -216,11 +217,13 @@ VASIR_ENGINE.D3.functions.setup_radar = function( params ){
 
     //Add a circle representing negative values
     //Polygon representing negative data
-    radar_axes.append('svg:path')
-        .attr('id', 'negative_value_polygon')
-        .attr('d', function(d,i){
-           return 'M' + mid_point_data.join('L') + 'Z';
-        });
+    if(show_inner_circle === true){
+        radar_axes.append('svg:path')
+            .attr('id', 'negative_value_polygon')
+            .attr('d', function(d,i){
+               return 'M' + mid_point_data.join('L') + 'Z';
+            });
+    }
 
     /* DOT IN THE MIDDLE OF AXES
     radar_axes.append('svg:g')
