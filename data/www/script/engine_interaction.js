@@ -223,43 +223,47 @@ VASIR_ENGINE.functions.update_game_state = function(params){
     //If this current list of entities does not match the previous game
     //  state from the server, we need to generate a new list
     if(VASIR_ENGINE.WEB_SOCKET.previous_data.game_state){
-        if(VASIR_ENGINE.entities.length 
+
+        if(_.keys(VASIR_ENGINE.entities).length 
             !== VASIR_ENGINE.WEB_SOCKET.previous_data.game_state.entities.length){
+            var list_element = {};
 
             //Clear out the existing elements
             $('#entities_list_ul').empty();
 
-            for(var i=VASIR_ENGINE.entities.length-1; i>=0; i--){
-                var list_element = $('<li/>', {
-                    'id': 'entity_' + VASIR_ENGINE.entities[i].id,
-                });
+            for(var entity in VASIR_ENGINE.entities){
+                if(VASIR_ENGINE.entities.hasOwnProperty(entity)){
+                    list_element = $('<li/>', {
+                        'id': 'entity_' + VASIR_ENGINE.entities[entity].id,
+                    });
 
-                //Link (button)
-                list_element.append( $('<a/>', {
-                    'href': '#',
-                    'text': VASIR_ENGINE.entities[i].id,
-                    'class':'button',
-                    'click': function(index, entity_id){
-                        return function(){
-                            //We need to use a closure here to maintain
-                            //  state of the loop variable
-                            //Perform an action based on the selection mode
-                            if(VASIR_ENGINE.selection_mode === null){
-                                //select the entity they click on
-                                VASIR_ENGINE.functions.set_selected_entity(
-                                    {'entity_id':entity_id});
-                            }else if(VASIR_ENGINE.selection_mode ===
-                                'entity_target'){
+                    //Link (button)
+                    list_element.append( $('<a/>', {
+                        'href': '#',
+                        'text': VASIR_ENGINE.entities[entity].id,
+                        'class':'button',
+                        'click': function(index, entity_id){
+                            return function(){
+                                //We need to use a closure here to maintain
+                                //  state of the loop variable
+                                //Perform an action based on the selection mode
+                                if(VASIR_ENGINE.selection_mode === null){
+                                    //select the entity they click on
+                                    VASIR_ENGINE.functions.set_selected_entity(
+                                        {'entity_id':entity_id});
+                                }else if(VASIR_ENGINE.selection_mode ===
+                                    'entity_target'){
 
-                                VASIR_ENGINE.functions.set_entity_target({
-                                    'target_entity_id': entity_id 
-                                });
-                            }
-                        }}(i, VASIR_ENGINE.entities[i].id)
-                }));
+                                    VASIR_ENGINE.functions.set_entity_target({
+                                        'target_entity_id': entity_id 
+                                    });
+                                }
+                            }}(entity, VASIR_ENGINE.entities[entity].id)
+                    }));
 
-                //Add links to the entities list element
-                $('#entities_list_ul').append(list_element);
+                    //Add links to the entities list element
+                    $('#entities_list_ul').append(list_element);
+                }
             }
         }
     }
@@ -639,9 +643,11 @@ VASIR_ENGINE.functions.update_log = function(params){
         }));
 
         //Scroll to bottom of the log
-        $('#engine_log').scrollTop = $('#engine_log').scrollHeight;
-        log_el.animate({ scrollTop: log_el.prop('scrollHeight') - log_el.height() },
-            30);
+        log_el.prop({'scrollTop': log_el.prop('scrollHeight')});
+
+        //If we want to animate
+        //log_el.animate({ scrollTop: log_el.prop('scrollHeight') - log_el.height() },
+        //    30);
     }
 };
 
@@ -745,3 +751,19 @@ VASIR_ENGINE.functions.init = function(params){
     //Setup all the web socket functions
     VASIR_ENGINE.WEB_SOCKET.functions.init();
 }
+
+//------------------------------------------------------------------------
+//
+//Setup global fallbacks
+//
+//------------------------------------------------------------------------
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       || 
+          window.webkitRequestAnimationFrame || 
+          window.mozRequestAnimationFrame    || 
+          window.oRequestAnimationFrame      || 
+          window.msRequestAnimationFrame     || 
+          function(/* function */ callback, /* DOMElement */ element){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();

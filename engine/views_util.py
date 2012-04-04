@@ -15,7 +15,7 @@ import random
 from django.shortcuts import *
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
-from django.core.mail import EmailMessage, SMTPConnection, send_mail
+from django.core.mail import EmailMessage, send_mail
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import cache_page

@@ -26,6 +26,9 @@ VASIR_ENGINE.canvas = {
 
     //entities stores canvas entities
     entities: {},
+    
+    //list of images entities will use
+    entities_images: [],
 
     functions: {
         clear: undefined,
@@ -36,7 +39,7 @@ VASIR_ENGINE.canvas = {
             draw_rect: undefined
         }
     },
-    interval: undefined
+    run_game: undefined
 };
 
 //============================================================================
@@ -98,7 +101,11 @@ VASIR_ENGINE.canvas.functions.util.draw_rect = function(params, y, w, h, color){
 //---------------------------------------
 VASIR_ENGINE.canvas.functions.draw_entities = function(){
     //We'll need to loop through all the entities and draw them to the canvas
-    var cur_entity = undefined;
+    var cur_entity = undefined,
+        ctx = VASIR_ENGINE.canvas._canvas.getContext('2d'),
+        engine_canvas = VASIR_ENGINE.canvas,
+        x,y;
+
     for(i in VASIR_ENGINE.entities){
         if(i !== undefined){
             cur_entity = VASIR_ENGINE.entities[i];
@@ -106,6 +113,8 @@ VASIR_ENGINE.canvas.functions.draw_entities = function(){
             //  (Because the response may take 50 ms, this draw_entity will be called
             //  before the data is sent back to client)
             if(cur_entity.persona !== undefined){
+
+                /* OLD - Generate colored squares
                 //Generate a color based on entity personality
                 var color_r = Math.abs(cur_entity.persona.extraversion
                     + cur_entity.persona.neuroticism);
@@ -124,27 +133,41 @@ VASIR_ENGINE.canvas.functions.draw_entities = function(){
                 var color = '#' + color_r + color_g + color_b;
 
                 //Draw a rect representing the entity
-                VASIR_ENGINE.canvas.functions.util.draw_rect({
+                engine_canvas.functions.util.draw_rect({
                     x: cur_entity.position[0] 
-                        * VASIR_ENGINE.canvas.config.entity_cell_position_modifier,
+                        * engine_canvas.config.entity_cell_position_modifier,
                     y: cur_entity.position[1]  
-                        * VASIR_ENGINE.canvas.config.entity_cell_position_modifier,
-                    w: VASIR_ENGINE.canvas.config.entity_width,
-                    h: VASIR_ENGINE.canvas.config.entity_height,
+                        * engine_canvas.config.entity_cell_position_modifier,
+                    w: engine_canvas.config.entity_width,
+                    h: engine_canvas.config.entity_height,
                     color: color
                 });
+                */
+
+                //TODO: Use subpixel stuff (check http://seb.ly/2011/02/html5-canvas-sprite-optimisation/ )
+                x = cur_entity.position[0] 
+                    * engine_canvas.config.entity_cell_position_modifier,
+                y = cur_entity.position[1]  
+                    * engine_canvas.config.entity_cell_position_modifier,
+           
+                ctx.drawImage(
+                    engine_canvas.entities_images[0],
+                    0, 0, 
+                    26, 44, 
+                    x,y, 
+                    26, 44);
 
                 //If the entity is selected by the user, draw another 
                 //  'target' rect
                 if(VASIR_ENGINE.selected_entity !== undefined 
                     && VASIR_ENGINE.selected_entity == i){
-                        VASIR_ENGINE.canvas.functions.util.draw_rect({
+                        engine_canvas.functions.util.draw_rect({
                             x: (cur_entity.position[0]
-                                * VASIR_ENGINE.canvas.config.entity_cell_position_modifier) + 1, 
+                                * engine_canvas.config.entity_cell_position_modifier) + 1, 
                             y: (cur_entity.position[1]
-                                * VASIR_ENGINE.canvas.config.entity_cell_position_modifier) + 1,
-                            w: VASIR_ENGINE.canvas.config.entity_width - 2,
-                            h: VASIR_ENGINE.canvas.config.entity_height - 2,
+                                * engine_canvas.config.entity_cell_position_modifier) + 1,
+                            w: engine_canvas.config.entity_width - 2,
+                            h: engine_canvas.config.entity_height - 2,
                             color: '#efefef'
                         });
                 }
@@ -251,18 +274,19 @@ VASIR_ENGINE.canvas.functions.select_entity = function(params, event_type){
 //Sets up all the canvas stuff
 //---------------------------------------
 VASIR_ENGINE.canvas.functions.init = function(){
+    var engine_canvas = VASIR_ENGINE.canvas;
     //Get canvas object
-    VASIR_ENGINE.canvas._canvas = $('#canvas')[0];
-    VASIR_ENGINE.canvas.height = parseInt($('#canvas').css('height'));
-    VASIR_ENGINE.canvas.width = parseInt($('#canvas').css('width'));
+    engine_canvas._canvas = $('#canvas')[0];
+    engine_canvas.height = parseInt($('#canvas').css('height'));
+    engine_canvas.width = parseInt($('#canvas').css('width'));
 
     //Get the context object
-    VASIR_ENGINE.canvas.context = VASIR_ENGINE.canvas._canvas.getContext('2d');
+    engine_canvas.context = engine_canvas._canvas.getContext('2d');
 
     //-----------------------------------
     //Add events
     //-----------------------------------
-    $(VASIR_ENGINE.canvas._canvas).bind('click', function(e){
+    $(engine_canvas._canvas).bind('click', function(e){
         VASIR_ENGINE.canvas.functions.select_entity({
             e: e,
             event_type: 'click'
@@ -272,8 +296,25 @@ VASIR_ENGINE.canvas.functions.init = function(){
     //-----------------------------------
     //Setup the interval that the canvas will be refreshed at
     //-----------------------------------
-    VASIR_ENGINE.canvas.interval = setInterval(
-        VASIR_ENGINE.canvas.functions.render, 10);
+    engine_canvas.run_game= function(){
+        var engine_canvas = VASIR_ENGINE.canvas;
+        requestAnimFrame(engine_canvas.run_game);
+        engine_canvas.functions.render();
+    };
+
+    //-----------------------------------
+    //Load entity images
+    //-----------------------------------
+    engine_canvas.entities_images = [
+        new Image()
+    ];
+    engine_canvas.entities_images[0].src = 'static/image/entities/dragoon.png';
+    
+    //Call it
+    engine_canvas.entities_images[0].onload = function(){
+        var engine_canvas = VASIR_ENGINE.canvas;
+        engine_canvas.run_game();
+    };
 
     return true;
 }
@@ -285,12 +326,11 @@ VASIR_ENGINE.canvas.functions.init = function(){
 //---------------------------------------
 VASIR_ENGINE.canvas.functions.render = function(){
     //Get the context object, store a reference so it's easier to work with
-    var ctx = VASIR_ENGINE.canvas.context;
+    var engine_canvas = VASIR_ENGINE.canvas;
     //Remove everything
-    VASIR_ENGINE.canvas.functions.clear();
+    engine_canvas.functions.clear();
 
     //Draw entities
-    ctx.fillStyle = '#232323';
-    VASIR_ENGINE.canvas.functions.draw_entities();
-
+    engine_canvas.context.fillStyle = '#232323';
+    engine_canvas.functions.draw_entities();
 }
