@@ -88,7 +88,36 @@ VASIR_ENGINE.canvas.functions.util.draw_rect = function(params, y, w, h, color){
     ctx.fillRect(x,y,w,h);
     ctx.closePath();
     ctx.fill();
-}
+
+    return true;
+};
+
+//---------------------------------------
+//draw_sprite( PARAMS({x,y,w,h}) ):
+//-------------
+//-Draws a rectangle
+//---------------------------------------
+VASIR_ENGINE.canvas.functions.util.draw_sprite = function(params){
+    var ctx = VASIR_ENGINE.canvas.context,
+        engine_canvas = VASIR_ENGINE.canvas;
+    if(params.x === undefined || params.y === undefined){
+        VASIR_ENGINE.ERRORS.create({
+            message: 'No x or y passed into draw_sprite',
+            type: 'ERROR'
+        });
+        return false;
+    }
+
+    ctx.drawImage(
+        engine_canvas.entities_images[0],
+        0, 0, 
+        26, 44, 
+        params.x,
+        params.y, 
+        26, 44);
+
+    return true;
+};
 //============================================================================
 //
 //General Canvas Functions
@@ -150,12 +179,11 @@ VASIR_ENGINE.canvas.functions.draw_entities = function(){
                 y = cur_entity.position[1]  
                     * engine_canvas.config.entity_cell_position_modifier,
            
-                ctx.drawImage(
-                    engine_canvas.entities_images[0],
-                    0, 0, 
-                    26, 44, 
-                    x,y, 
-                    26, 44);
+                engine_canvas.functions.util.draw_sprite({
+                    entity: cur_entity,
+                    x: x,
+                    y: y
+                });
 
                 //If the entity is selected by the user, draw another 
                 //  'target' rect
@@ -305,6 +333,7 @@ VASIR_ENGINE.canvas.functions.init = function(){
     //-----------------------------------
     //Load entity images
     //-----------------------------------
+    //TODO: load a giant image, then split it up for each entity
     engine_canvas.entities_images = [
         new Image()
     ];
