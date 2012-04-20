@@ -24,9 +24,6 @@ VASIR_ENGINE.canvas = {
         entity_height: 20
     },
 
-    //entities stores canvas entities
-    entities: {},
-    
     //list of images entities will use
     entities_images: [],
 
@@ -98,8 +95,11 @@ VASIR_ENGINE.canvas.functions.util.draw_rect = function(params, y, w, h, color){
 //-Draws a rectangle
 //---------------------------------------
 VASIR_ENGINE.canvas.functions.util.draw_sprite = function(params){
+    params = params || {}
+
     var ctx = VASIR_ENGINE.canvas.context,
         engine_canvas = VASIR_ENGINE.canvas;
+
     if(params.x === undefined || params.y === undefined){
         VASIR_ENGINE.ERRORS.create({
             message: 'No x or y passed into draw_sprite',
@@ -108,9 +108,15 @@ VASIR_ENGINE.canvas.functions.util.draw_sprite = function(params){
         return false;
     }
 
+    //Get the sprite position
+    sprite_num = params.sprite_num || 0;
+    sprite_num = ( (sprite_num % 6) * 5 );
+
     ctx.drawImage(
         engine_canvas.entities_images[0],
-        0, 0, 
+        //sx, sy
+        26 * sprite_num, 0,
+        //width, height
         26, 44, 
         params.x,
         params.y, 
@@ -182,7 +188,8 @@ VASIR_ENGINE.canvas.functions.draw_entities = function(){
                 engine_canvas.functions.util.draw_sprite({
                     entity: cur_entity,
                     x: x,
-                    y: y
+                    y: y,
+                    sprite_num: parseInt(cur_entity.id.replace(/[^0-9]/g, ''),10)
                 });
 
                 //If the entity is selected by the user, draw another 
@@ -337,7 +344,7 @@ VASIR_ENGINE.canvas.functions.init = function(){
     engine_canvas.entities_images = [
         new Image()
     ];
-    engine_canvas.entities_images[0].src = 'static/image/entities/dragoon.png';
+    engine_canvas.entities_images[0].src = 'static/image/entities/entities_sheet_1.png';
     
     //Call it
     engine_canvas.entities_images[0].onload = function(){
